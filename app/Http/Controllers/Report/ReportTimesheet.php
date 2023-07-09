@@ -228,7 +228,7 @@ class ReportTimesheet extends Controller
                     }
                 } else {
                     //  17 - l - n - 22
-                    if ($lowTime->floatDiffInHours($started_at, false) > 0 && $ended_at->floatDiffInHours($highTime, false) > 0) {
+                    if ($lowTime->floatDiffInHours($started_at, false) >= 0 && $ended_at->floatDiffInHours($highTime, false) >= 0) {
                         $OTByADay = ($started_at->floatDiffInHours($ended_at, false) - $interruption_time) * 1.5;
                         //Cái này còn sai - chưa chỉnh
                         //$flag = 1;
@@ -293,11 +293,11 @@ class ReportTimesheet extends Controller
                 $totalOvertime = $totalOvertime + $OTByADay/8;
                 
                 // để test theo từng người
-                if ($employee->id == 297) {
-                    echo $employee->id . '///' . $task->started_at . '------' . $task->ended_at . ' --------> ' . $totalOvertime . '<br>';
-                    echo $interruption_time. '-----'.($OTByADay/8). '<br>';
-                    echo $tempCheck. '<br>';
-                }
+                // if ($employee->id == 305) {
+                //     echo $employee->id . '///' . $task->started_at . '------' . $task->ended_at . ' --------> ' . $totalOvertime . '<br>';
+                //     echo $interruption_time. '-----'.($OTByADay/8). '<br>';
+                //     echo $tempCheck. '<br>';
+                // }
                 // để test theo từng người
 
             }
