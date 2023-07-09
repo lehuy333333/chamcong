@@ -134,7 +134,7 @@ class ReportTimesheet extends Controller
                     }
 
                     // 22 - l - n - 06
-                    else if ($highTime->floatDiffInHours($started_at, false) > 0 && $ended_at->floatDiffInHours($maxTime, false) > 0) {
+                    else if ($highTime->floatDiffInHours($started_at, false) >= 0 && $ended_at->floatDiffInHours($maxTime, false) >= 0) {
                         $OTByADay = ($started_at->floatDiffInHours($ended_at, false) - $interruption_time) * $xHol_max;
                         $tempCheck = 'HOL: 22 - l - n - 06';
                     }
@@ -159,44 +159,44 @@ class ReportTimesheet extends Controller
                     
                     if (isset($chk->work_symbols_coefficient) && $chk->work_symbols_coefficient  > 0) {
                         //  17 - l - n - 22
-                        if ($lowTime->floatDiffInHours($started_at, false) > 0 && $ended_at->floatDiffInHours($highTime, false) > 0) {
+                        if ($lowTime->floatDiffInHours($started_at, false) >= 0 && $ended_at->floatDiffInHours($highTime, false) > 0) {
                             $OTByADay = ($started_at->floatDiffInHours($ended_at, false) - $interruption_time) * $xWek_min;
-                            $tempCheck = 'week 17 - l - n - 22<br>';
+                            $tempCheck = 'week 17 - l - n - 21.59<br>';
                         }
 
                         // 22 - l - n - 06
-                        else if ($highTime->floatDiffInHours($started_at, false) > 0 && $ended_at->floatDiffInHours($maxTime, false) > 0) {
+                        else if ($highTime->floatDiffInHours($started_at, false) >= 0 && $ended_at->floatDiffInHours($maxTime, false) >= 0) {
                             $OTByADay = ($started_at->floatDiffInHours($ended_at, false) - $interruption_time) * $xWek_max;
                             $tempCheck = 'week 22 - l - n - 06<br>';
                         }
 
                         //  17 - l - 22 - n - 06
-                        else if ($lowTime->floatDiffInHours($started_at, false) > 0 && $started_at->floatDiffInHours($highTime, false) > 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) > 0) {
+                        else if ($lowTime->floatDiffInHours($started_at, false) >= 0 && $started_at->floatDiffInHours($highTime, false) > 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) >= 0) {
                             $OTByADay = ($started_at->floatDiffInHours($highTime, false) - $interruption_time) * $xWek_min + $highTime->floatDiffInHours($ended_at, false) * $xWek_max;
                             $tempCheck = 'week 17 - l - 22 - n - 06<br>';
                         }
 
                         //  17 - l - 22 - 06 - n
-                        else if ($lowTime->floatDiffInHours($started_at, false) > 0 && $started_at->floatDiffInHours($highTime, false) > 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) <= 0) {
+                        else if ($lowTime->floatDiffInHours($started_at, false) >= 0 && $started_at->floatDiffInHours($highTime, false) > 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) < 0) {
                             $OTByADay = ($started_at->floatDiffInHours($highTime, false) - $interruption_time) * $xWek_min + $xWek_max * 8;
                             $tempCheck = 'week 17 - l - 22 - 06 - n<br>';
                         }
 
                         // l - 17 - n - 22
-                        else if ($lowTime->floatDiffInHours($started_at, false) <= 0 && $ended_at->floatDiffInHours($lowTime, false) <= 0 && $ended_at->floatDiffInHours($highTime, false) > 0) {
+                        else if ($lowTime->floatDiffInHours($started_at, false) < 0 && $ended_at->floatDiffInHours($lowTime, false) <= 0 && $ended_at->floatDiffInHours($highTime, false) > 0) {
                             // $OTByADay = ($lowTime->floatDiffInHours($ended_at, false) - $interruption_time) * 2;
                             $OTByADay = ($lowTime->floatDiffInHours($ended_at, false)) * $xWek_min;
                             $tempCheck = 'week l - 17 - n - 22<br>';
                         }
 
                         // l - 17 - 22 - n - 06
-                        else if ($lowTime->floatDiffInHours($started_at, false) <= 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) > 0) {
+                        else if ($lowTime->floatDiffInHours($started_at, false) < 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) >= 0) {
                             $OTByADay = (5 - $interruption_time) * 2 + $highTime->floatDiffInHours($ended_at, false) * $xWek_max;
                             $tempCheck = 'week l - 17 - 22 - n - 06<br>';
                         }
 
                         // l - 17 - 22 - 06 - n
-                        else if ($lowTime->floatDiffInHours($started_at, false) <= 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) <= 0) {
+                        else if ($lowTime->floatDiffInHours($started_at, false) < 0 && $ended_at->floatDiffInHours($maxTime, false) < 0) {
                             $OTByADay = (5 - $interruption_time) * $xWek_min + $xWek_max * 8;
                             $tempCheck = 'week l - 17 - 22 - 06 - n<br>';
                         }
@@ -205,23 +205,23 @@ class ReportTimesheet extends Controller
                         //  l - n - 22
                         if ($ended_at->floatDiffInHours($highTime, false) > 0) {
                             $OTByADay = ($started_at->floatDiffInHours($ended_at, false) - $interruption_time) * $xWek_min;
-                            $tempCheck = 'weekKK l - n - 22<br>';
+                            $tempCheck = 'weekKK l - n - 21.59<br>';
                         }
 
                         // 22 - l - n - 06
-                        else if ($highTime->floatDiffInHours($started_at, false) >= 0 && $ended_at->floatDiffInHours($maxTime, false) > 0) {
+                        else if ($highTime->floatDiffInHours($started_at, false) >= 0 && $ended_at->floatDiffInHours($maxTime, false) >= 0) {
                             $OTByADay = ($started_at->floatDiffInHours($ended_at, false) - $interruption_time) * $xWek_max;
                             $tempCheck = 'weekKK 22 - l - n - 06<br>' . ($started_at->floatDiffInHours($ended_at, false) - $interruption_time);
                         }
 
                         //  l - 22 - n - 06
-                        else if ($started_at->floatDiffInHours($highTime, false) > 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) > 0) {
+                        else if ($started_at->floatDiffInHours($highTime, false) > 0 && $ended_at->floatDiffInHours($highTime, false) < 0 && $ended_at->floatDiffInHours($maxTime, false) >= 0) {
                             $OTByADay =($started_at->floatDiffInHours($highTime, false) - $interruption_time) * $xWek_min + $highTime->floatDiffInHours($ended_at, false) * $xWek_max;
                             $tempCheck = 'weekKK l - 22 - n - 06<br>';
                         }
 
                         //  l - 22 - 06 - n
-                        else if ($ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) <= 0) {
+                        else if ($ended_at->floatDiffInHours($highTime, false) > 0 && $ended_at->floatDiffInHours($maxTime, false) < 0) {
                             $OTByADay = ($started_at->floatDiffInHours($highTime, false) - $interruption_time) * $xWek_min + $xWek_max * 8;
                             $tempCheck = 'weekKK l - 22 - 06 - n<br>';
                         }
@@ -236,7 +236,7 @@ class ReportTimesheet extends Controller
                     }
 
                     // 22 - l - n - 06
-                    else if ($highTime->floatDiffInHours($started_at, false) > 0 && $ended_at->floatDiffInHours($maxTime, false) > 0) {
+                    else if ($highTime->floatDiffInHours($started_at, false) >= 0 && $ended_at->floatDiffInHours($maxTime, false) >= 0) {
                         //Cái này còn sai - chưa chỉnh
                         // if ($key > 0 && $flag == 1) {
                         //     $OTByADay = ($started_at->floatDiffInHours($ended_at, false) - $interruption_time) * 2.1;
@@ -248,34 +248,34 @@ class ReportTimesheet extends Controller
                     }
 
                     //  17 - l - 22 - n - 06
-                    else if ($lowTime->floatDiffInHours($started_at, false) > 0 && $started_at->floatDiffInHours($highTime, false) > 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) > 0) {
+                    else if ($lowTime->floatDiffInHours($started_at, false) >= 0 && $started_at->floatDiffInHours($highTime, false) > 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) >= 0) {
                         $OTByADay = ($started_at->floatDiffInHours($highTime, false) - $interruption_time) * 1.5 + $highTime->floatDiffInHours($ended_at, false) * 2.1;
                         $tempCheck = '17 - l - 22 - n - 06 day<br>';
                     }
 
                     //  17 - l - 22 - 06 - n
-                    else if ($lowTime->floatDiffInHours($started_at, false) > 0 && $started_at->floatDiffInHours($highTime, false) > 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) <= 0) {
+                    else if ($lowTime->floatDiffInHours($started_at, false) >= 0 && $started_at->floatDiffInHours($highTime, false) > 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) < 0) {
                         $OTByADay = ($started_at->floatDiffInHours($highTime, false) - $interruption_time) * 1.5 + 8 * 2.1;
                         $tempCheck = '17 - l - 22 - 06 - n day<br>';
                     }
 
                     // l - 17 - n - 22
-                    else if ($lowTime->floatDiffInHours($started_at, false) <= 0 && $ended_at->floatDiffInHours($lowTime, false) <= 0 && $ended_at->floatDiffInHours($highTime, false) > 0) {
+                    else if ($lowTime->floatDiffInHours($started_at, false) < 0 && $ended_at->floatDiffInHours($lowTime, false) < 0 && $ended_at->floatDiffInHours($highTime, false) >= 0) {
                         // $OTByADay = ($lowTime->floatDiffInHours($ended_at, false) - $interruption_time) * 1.5;
                         $OTByADay = ($lowTime->floatDiffInHours($ended_at, false)) * 1.5;
                         $tempCheck = 'l - 17 - n - 22 day<br>';
                     }
 
                     // l - 17 - 22 - n - 06
-                    else if ($lowTime->floatDiffInHours($started_at, false) <= 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) > 0) {
+                    else if ($lowTime->floatDiffInHours($started_at, false) < 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) >= 0) {
                         $OTByADay = (5 - $interruption_time) * 1.5 + $highTime->floatDiffInHours($ended_at, false) * 2.1;
                         $tempCheck = 'l - 17 - 22 - n - 06 day<br>';
                     }
 
                     // l - 17 - 22 - 06 - n
-                    else if ($lowTime->floatDiffInHours($started_at, false) <= 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) <= 0) {
+                    else if ($lowTime->floatDiffInHours($started_at, false) < 0 && $ended_at->floatDiffInHours($highTime, false) <= 0 && $ended_at->floatDiffInHours($maxTime, false) < 0) {
                         $OTByADay = (5 - $interruption_time) * 1.5 + 8 * 2.1;
-                        $tempCheck = 'l - 17 - 22 - 06 - nc day<br>';
+                        $tempCheck = 'l - 17 - 22 - 06 - n day<br>';
                     }
                 }
 
@@ -293,7 +293,7 @@ class ReportTimesheet extends Controller
                 $totalOvertime = $totalOvertime + $OTByADay/8;
                 
                 // để test theo từng người
-                if ($employee->id == 290) {
+                if ($employee->id == 297) {
                     echo $employee->id . '///' . $task->started_at . '------' . $task->ended_at . ' --------> ' . $totalOvertime . '<br>';
                     echo $interruption_time. '-----'.($OTByADay/8). '<br>';
                     echo $tempCheck. '<br>';
@@ -323,9 +323,9 @@ class ReportTimesheet extends Controller
                 $totalWorkdate = ($totalWorkdate - $tmp_work_special_day - $totalBaseWorkdate) * 2 + $totalBaseWorkdate + $tmp_work_special_day;
             }
 
-            if($employee->id == 290){
-                echo($tmp_work_special_day.'------'.$totalWorkdate);
-            }
+            // if($employee->id == 290){
+            //     echo($tmp_work_special_day.'------'.$totalWorkdate);
+            // }
 
             $date = \Carbon\Carbon::parse($workdates->first()->workdate);
             $reportprevious = $employee
