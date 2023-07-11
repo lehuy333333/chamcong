@@ -2,13 +2,18 @@
 
 @section('title')
     NHẬP CÔNG DƯ THÁNG TRƯỚC
+    <form action="{{ url('timesheet/getSurplusMonth') }}" method="get">
+        @csrf
+        <input type="month" name="month" value="{{ \Carbon\Carbon::parse($start_date)->format('Y-m') }}">
+        <button type="submit">chọn</button>
+    </form>
 @endsection
 
 @section('content')
     <div class="container-fluid mt-3 mb-5 mobi-mt-50 mobi-mb-200">
         <div class="row">
             <div class="col-md-12">
-
+                {{-- @dd($start_date) --}}
                 <div class="table-responsive">
                     <table class="table table-striped projects" width="100%" cellspacing="0">
                         <thead style="background-color: rgb(175, 200, 236)">
@@ -31,13 +36,11 @@
                                     {{-- <td>{{ $employee->employee_type->Etype_name }}</td> --}}
 
                                     <td class="text-center">
-                                        @if (!empty($employee->reports->where('start_date', $start_date)->first()->total_surplus_workdate))
+                                        @if (isset($employee->reports->where('start_date', $start_date)->first()->total_surplus_workdate))
                                         <input type="text" name="congdu" value="{{$employee->reports->where('start_date', $start_date)->first()->total_surplus_workdate}}">
                                         @else
                                         <input type="text" name="congdu" value="0">
                                         @endif
-                                        
-                                        
                                     </td>
 
                                 </tr>
@@ -94,8 +97,9 @@
                 var objTemp = {
                     empID: $(this).find('td').eq(1).text(),
                     congdu: $(this).find('td').eq(4).find('input').val(),
+                    start_date: '{{$start_date}}',
                 };
-
+                // alert(JSON.stringify(objTemp));
                 arrData.push(objTemp);
             });
 

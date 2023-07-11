@@ -244,6 +244,7 @@ class CalendarController extends Controller
         }else{
             $start_date = new Carbon('first day of last month');
         }
+        $start_date = $start_date->toDateString();
         return view("pages.timesheet.surpluse")->with(compact('start_date'));
     }
     
@@ -257,7 +258,7 @@ class CalendarController extends Controller
             $employee = employees::where('employeeID', $value['empID'])->first();
 
             $report = reports::updateOrCreate(
-                ['start_date' =>  '2023-05-01', 'employee_id' => $employee->id],
+                ['start_date' =>  $value['start_date'], 'employee_id' => $employee->id],
                 [
                     'total_surplus_workdate' => $value['congdu']
                 ]
