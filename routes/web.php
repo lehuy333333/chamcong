@@ -15,6 +15,7 @@ use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\Employee\EmployeeTypeController;
 use App\Http\Controllers\Report\ReportTimesheet;
 use App\Http\Controllers\Task\taskController;
+use App\Http\Controllers\Controller;
 
 
 /*
@@ -33,6 +34,8 @@ Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::post('/checklogin', [AuthController::class, 'login'])->name('checklogin');
 Route::get('/logout', [AuthController::class, 'signOut']);
 
+
+Route::get('/test', [Controller::class, 'index']);
 //Home
 Route::get('home/index', [AuthController::class, 'home'])->name('home.index');
 

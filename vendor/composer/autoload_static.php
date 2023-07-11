@@ -135,6 +135,7 @@ class ComposerStaticInitdf250734a110e98556a09d93ec7427cf
             'Laravel\\SerializableClosure\\' => 28,
             'Laravel\\Sanctum\\' => 16,
             'Laravel\\Sail\\' => 13,
+            'Laradevsbd\\Zkteco\\' => 18,
         ),
         'I' => 
         array (
@@ -431,6 +432,10 @@ class ComposerStaticInitdf250734a110e98556a09d93ec7427cf
         'Laravel\\Sail\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/sail/src',
+        ),
+        'Laradevsbd\\Zkteco\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laradevsbd/zkteco-sdk/src',
         ),
         'Illuminate\\Support\\' => 
         array (
@@ -1405,7 +1410,6 @@ class ComposerStaticInitdf250734a110e98556a09d93ec7427cf
         'Faker\\Provider\\nl_BE\\Payment' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/Payment.php',
         'Faker\\Provider\\nl_BE\\Person' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/Person.php',
         'Faker\\Provider\\nl_BE\\PhoneNumber' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/PhoneNumber.php',
-        'Faker\\Provider\\nl_BE\\Text' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/Text.php',
         'Faker\\Provider\\nl_NL\\Address' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_NL/Address.php',
         'Faker\\Provider\\nl_NL\\Color' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_NL/Color.php',
         'Faker\\Provider\\nl_NL\\Company' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_NL/Company.php',
@@ -2958,6 +2962,9 @@ class ComposerStaticInitdf250734a110e98556a09d93ec7427cf
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
+        'Laradevsbd\\Zkteco\\Http\\Controllers\\ZktecoController' => __DIR__ . '/..' . '/laradevsbd/zkteco-sdk/src/Http/Controllers/ZktecoController.php',
+        'Laradevsbd\\Zkteco\\Http\\Library\\ZktecoLib' => __DIR__ . '/..' . '/laradevsbd/zkteco-sdk/src/Http/Library/ZktecoLib.php',
+        'Laradevsbd\\Zkteco\\ZktecoServiceProvider' => __DIR__ . '/..' . '/laradevsbd/zkteco-sdk/src/ZktecoServiceProvider.php',
         'Laravel\\Sail\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/sail/src/Console/InstallCommand.php',
         'Laravel\\Sail\\Console\\PublishCommand' => __DIR__ . '/..' . '/laravel/sail/src/Console/PublishCommand.php',
         'Laravel\\Sail\\SailServiceProvider' => __DIR__ . '/..' . '/laravel/sail/src/SailServiceProvider.php',
