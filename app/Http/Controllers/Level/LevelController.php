@@ -15,7 +15,7 @@ class LevelController extends Controller
         ]);
 
         $level                   = new levels();
-        $level->level_name             = trim($request->get('level_name'));
+        $level->level_name       = trim($request->get('level_name'));
         try{
             $level->save();
             $message = 'Thêm chức vụ' .$level->level_name.'  thành công !!!! ';

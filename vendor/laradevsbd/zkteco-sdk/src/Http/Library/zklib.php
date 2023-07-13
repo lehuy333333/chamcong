@@ -11,14 +11,14 @@ class ZKLib
     public $session_id = 0;
     public $userdata = array();
     public $attendancedata = array();
-    public $timeout_sec = 60; //5
+    public $timeout_sec = 5; //5
     public $timeout_usec = 5000000;
     public function __construct($ip, $port)
     {
         $this->ip = $ip;
         $this->port = $port;
         $this->zkclient = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-        $timeout = array('sec' => 60, 'usec' => 500000);
+        $timeout = array('sec' => 5, 'usec' => 500000);
         $this->setTimeout($this->timeout_sec, $this->timeout_usec);
       // socket_set_option($this->zkclient, SOL_SOCKET, SO_RCVTIMEO, $timeout);
 
