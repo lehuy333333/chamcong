@@ -138,8 +138,9 @@ Route::post('users/changPass', [UserController::class, 'changePassword']);
 
 
 //*****Management Report Timesheet*****
-Route::get('report/timesheet', [ReportTimesheet::class, 'index']);
-Route::post('report/show', [ReportTimesheet::class, 'getReport']);
+Route::get('report/index', [ReportTimesheet::class, 'index']);
+Route::get('report/{department_id}/{month}', [ReportTimesheet::class, 'getReport']);
+// Route::post('report/show', [ReportTimesheet::class, 'getReport']);
 
 Route::get('report/delete', [ReportTimesheet::class, 'delete']);
 Route::post('report/delete', [ReportTimesheet::class, 'deleteTimesheet']);

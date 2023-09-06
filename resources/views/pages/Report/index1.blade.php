@@ -8,7 +8,7 @@
 
     <div class="container-fluid">
         <div class="col-md-3 mb-2 d-print-none">
-            <form action="{{ url('report/show') }}" method="post" class="mb-2">
+            {{-- <form action="{{ url('report/show') }}" method="post" class="mb-2">
                 @csrf
                 <div class="form-group">
                     <label for="month">Chọn tháng</label>
@@ -29,7 +29,43 @@
                     </select>
                 </div>
                 <button type="submit" class="btn btn-sm btn-success">Xem</button>
-            </form>
+            </form> --}}
+
+            <div class="form-group">
+                <label for="month">Chọn tháng</label>
+                <input type="month" name="month" id="month"
+                    value="{{ isset($month) ? \Carbon\Carbon::parse($month)->format('Y-m') : '' }}" class="form-control">
+
+                <label for="department" class="mr-2 ">Chọn phân xưởng</label>
+                <select id="department" name="department" class="mr-2 form-control">
+                    @if (Auth::user()->level_id > 2)
+                        <option value="{{ Auth::user()->department_id }}">
+                            {{ Auth::user()->department->department_name }}</option>
+                    @else
+                        @foreach ($departments as $key => $department)
+                            @php
+                                $tmp_depart = '';
+                            @endphp
+                            @if (isset($depart))
+                                @if ($depart->id == $department->id)
+                                    @php
+                                        $tmp_depart = 'selected';
+                                    @endphp
+                                @endif
+                            @endif
+                            <option value="{{ $department->id }}" {{$tmp_depart}}>{{ $department->department_name }}</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
+            <a href="" class="btn btn-sm btn-success" id="link_get_report">Xem</a>
+            <script>
+                $("#link_get_report").on("click", function(e) {
+                    $(this).attr("href", "{{ url('report') }}" + "/" + $("#department").find(":selected").val() + "/" + $(
+                        "#month").val());
+                });
+            </script>
+
             <ul class="nav nav-pills ">
                 <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Chính thức</a></li>
                 <li class="nav-item"><a class="nav-link" href="#KV" data-toggle="tab">Khoán việc</a></li>
@@ -42,35 +78,42 @@
                 <div class="active tab-pane" id="activity">
                     <div class="table-responsive d-print-table">
                         <table class="table table-sm table-bordered" id="table-data-export">
-                                <tr class="noborder">
-                                    @php
-                                        $coltop = 13 + $workdates->count();
-                                    @endphp
-                                    <td colspan="{{ $coltop }}"
-                                        class="text-center border-right-0  border-top-0 border-bottom-0 border-left-0 noborder" style="text-align: center;vertical-align: middle;">
-                                        <div class="text-center">
-                                            <h5>BẢNG CHẤM CÔNG - CÔNG TY CỔ PHẦN DỊCH VỤ KỸ THUẬT TÂN CẢNG THÁNG {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}</h5>
-                                        </div>
-                                    </td>
-                                </tr><tr class="noborder">
-                                    <td colspan="{{ $coltop }}"
-                                        class="text-center border-right-0  border-top-0 border-bottom-0 border-left-0 noborder" style="text-align: center;vertical-align: middle;">
-                                        <div class="text-center">
-                                            <h6>{{ $depart->department_name }}</h6>
-                                        </div>
-                                    </td>
-                                </tr> <tr class="noborder">
-                                    <td colspan="{{ $coltop }}" class="text-center  border-top-0  border-right-0 border-bottom-0 border-left-0 noborder" style="text-align: right;vertical-align: middle;">
-                                        <div class="text-right">
-                                            Ngày công định mức: <b>{{ $workdaysPayroll }}</b>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tr class="noborder">
+                                @php
+                                    $coltop = 13 + $workdates->count();
+                                @endphp
+                                <td colspan="{{ $coltop }}"
+                                    class="text-center border-right-0  border-top-0 border-bottom-0 border-left-0 noborder"
+                                    style="text-align: center;vertical-align: middle;">
+                                    <div class="text-center">
+                                        <h5>BẢNG CHẤM CÔNG - CÔNG TY CỔ PHẦN DỊCH VỤ KỸ THUẬT TÂN CẢNG THÁNG
+                                            {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}</h5>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="noborder">
+                                <td colspan="{{ $coltop }}"
+                                    class="text-center border-right-0  border-top-0 border-bottom-0 border-left-0 noborder"
+                                    style="text-align: center;vertical-align: middle;">
+                                    <div class="text-center">
+                                        <h6>{{ $depart->department_name }}</h6>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="noborder">
+                                <td colspan="{{ $coltop }}"
+                                    class="text-center  border-top-0  border-right-0 border-bottom-0 border-left-0 noborder"
+                                    style="text-align: right;vertical-align: middle;">
+                                    <div class="text-right">
+                                        Ngày công định mức: <b>{{ $workdaysPayroll }}</b>
+                                    </div>
+                                </td>
+                            </tr>
 
                             <tr class="table-primary" style="text-align: center">
                                 <td style="background-color:#b8daff;border-color: #7abaff;" class="text-center">STT</td>
-                                <td style="background-color:#b8daff;border-color: #7abaff;"  class="text-center ">MSNV</td>
-                                <td style="background-color:#b8daff;border-color: #7abaff;"  class="text-center ">Họ Tên</td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;" class="text-center ">MSNV</td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;" class="text-center ">Họ Tên</td>
                                 @foreach ($workdates as $workdate)
                                     <td class="text-center"
                                         @if ($workdate->isWeekend) style="background-color:#FAFAD2;border-color: #7abaff;" 
@@ -80,24 +123,26 @@
                                         {{ \Carbon\Carbon::parse($workdate->workdate)->format('d') }}
                                     </td>
                                 @endforeach
-                                <td style="background-color:#b8daff;border-color: #7abaff;" ><b>Cdư Ttrước</b></td>
-                                <td style="background-color:#b8daff;border-color: #7abaff;" ><b>LV</b></td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;"><b>Cdư Ttrước</b></td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;"><b>LV</b></td>
 
-                                <td style="background-color:#b8daff;border-color: #7abaff;" >Phép</td>
-                                <td style="background-color:#b8daff;border-color: #7abaff;" >Ốm</td>
-                                <td style="background-color:#b8daff;border-color: #7abaff;" ><b>Tổng<b></td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;">Phép</td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;">Ốm</td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;"><b>Tổng<b></td>
                                 {{-- <td style="background-color:#b8daff;border-color: #7abaff;" ><b>Làm thêm</b></td> --}}
-                                <td style="background-color:#b8daff;border-color: #7abaff;" ><b>Tổng Công<b></td>
-                                <td style="background-color:#b8daff;border-color: #7abaff;" >Trực lễ</td>
-                                <td style="background-color:#b8daff;border-color: #7abaff;" ><b>Cdư Tnày</b></td>
-                                <td style="background-color:#b8daff;border-color: #7abaff;" >Hệ số</td>
-                                <td style="background-color:#b8daff;border-color: #7abaff;" >Xếp Loại</td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;"><b>Tổng Công<b></td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;">Trực lễ</td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;"><b>Cdư Tnày</b></td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;">Hệ số</td>
+                                <td style="background-color:#b8daff;border-color: #7abaff;">Xếp Loại</td>
                             </tr>
 
                             @foreach ($payroll_employees as $employee)
                                 <tr class="border-primary bg-light">
-                                    <th style="border: 1px solid #dee2e6;" rowspan="3" scope="row"><b>{{ $loop->index + 1 }}</b></td>
-                                    <td style="border: 1px solid #dee2e6;" rowspan="3">{{ Str::upper($employee->employeeID) }}</td>
+                                    <th style="border: 1px solid #dee2e6;" rowspan="3" scope="row">
+                                        <b>{{ $loop->index + 1 }}</b></td>
+                                    <td style="border: 1px solid #dee2e6;" rowspan="3">
+                                        {{ Str::upper($employee->employeeID) }}</td>
                                     <td style="border: 1px solid #dee2e6;" rowspan="3">
                                         <b class="text-nowrap">
                                             {{ Str::upper($employee->lastname . ' ' . $employee->firstname) }}</b>
@@ -175,29 +220,42 @@
                                         <b>{{ $totalWorkdate - $totalOff }}</b>
                                     </td>
                                     @if (!empty($report))
-                                        <td style="border: 1px solid #dee2e6;" class="text-center">{{ $totalOff }}</td>
-                                        <td style="border: 1px solid #dee2e6;" class="text-center">{{ $totalSick }}</td>
-                                        <td style="border: 1px solid #dee2e6;" class="text-center"><b>{{ $totalWorkdate }}</b></td>
+                                        <td style="border: 1px solid #dee2e6;" class="text-center">{{ $totalOff }}
+                                        </td>
+                                        <td style="border: 1px solid #dee2e6;" class="text-center">{{ $totalSick }}
+                                        </td>
+                                        <td style="border: 1px solid #dee2e6;" class="text-center">
+                                            <b>{{ $totalWorkdate }}</b>
+                                        </td>
                                         {{-- <td style="border: 1px solid #dee2e6;" class="text-center">
                                             <b>{{ round($report->total_overtime, 1) }}</b>
                                         </td> --}}
                                         <td style="border: 1px solid #dee2e6;" class="text-center">
                                             <b>{{ round($report->total_timesheet + $reportprevious->total_surplus_workdate, 1) }}</b>
                                         </td>
-                                        <td style="border: 1px solid #dee2e6;" class="text-center">{{ $totalTL }}</td>
-                                        <td style="border: 1px solid #dee2e6;"><b>{{ round($report->total_surplus_workdate, 1) }}</b></td>
+                                        <td style="border: 1px solid #dee2e6;" class="text-center">{{ $totalTL }}
+                                        </td>
+                                        <td style="border: 1px solid #dee2e6;">
+                                            <b>{{ round($report->total_surplus_workdate, 1) }}</b>
+                                        </td>
                                         <td style="border: 1px solid #dee2e6;">{{ $employee->personal_coefficient }}</td>
                                         <td style="border: 1px solid #dee2e6;"></td>
                                     @else
-                                        <td style="border: 1px solid #dee2e6;" class="text-center"><b>{{ $totalOff }}</b></td>
-                                        <td style="border: 1px solid #dee2e6;" class="text-center"><b>{{ $totalSick }}</b></td>
+                                        <td style="border: 1px solid #dee2e6;" class="text-center">
+                                            <b>{{ $totalOff }}</b>
+                                        </td>
+                                        <td style="border: 1px solid #dee2e6;" class="text-center">
+                                            <b>{{ $totalSick }}</b>
+                                        </td>
                                         <td style="border: 1px solid #dee2e6;" class="text-center">
                                             <b>{{ $totalWorkdate }}</b>
                                         </td>
                                         <td style="border: 1px solid #dee2e6;" class="text-center">
 
                                         </td>
-                                        <td style="border: 1px solid #dee2e6;" class="text-center"><b>{{ $totalTL }}</b></td>
+                                        <td style="border: 1px solid #dee2e6;" class="text-center">
+                                            <b>{{ $totalTL }}</b>
+                                        </td>
                                         <td style="border: 1px solid #dee2e6;"></td>
                                         <td style="border: 1px solid #dee2e6;">{{ $employee->personal_coefficient }}</td>
                                         <td style="border: 1px solid #dee2e6;"></td>
@@ -256,7 +314,7 @@
                                             @if ($timesheet->workdate_id == $workdate->id && isset($timesheet->overtime))
                                                 @php
                                                     $tmpOver = true;
-                                                    $valOver = $timesheet->overtime ;
+                                                    $valOver = $timesheet->overtime;
                                                 @endphp
                                             @endif
                                         @endforeach
@@ -264,7 +322,7 @@
                                             <td class="text-center"
                                                 @if ($workdate->isWeekend) style="background-color:#FAFAD2;border: 1px solid #dee2e6;" 
                                             @elseif ($workdate->isHoliday) style="background-color:#CCFFFF;border: 1px solid #dee2e6;" @endif>
-                                                 {{round($valOver, 1)}}
+                                                {{ round($valOver, 1) }}
                                             </td>
                                         @else
                                             <td class="text-center"
@@ -288,20 +346,20 @@
 
                                 </tr>
                             @endforeach
-                            @if (Auth::user()->level_id > 1 && Auth::user()->department_id != 13)
+                            @if (Auth::user()->level_id > 1)
                                 <tr class="noborder">
                                     @php
                                         $col = 10 + $workdates->count();
                                     @endphp
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;" 
+                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
                                         <h6><b>Người lập báo cáo</b></h6>
                                     </td>
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;" 
+                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
                                         <h6><b>{{ Auth::user()->department->department_name }}</b></h6>
                                     </td>
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;" 
+                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
                                         <h6><b>Phó giám đốc phụ trách</b></h6>
                                     </td>
@@ -311,15 +369,15 @@
                                     @php
                                         $col = 10 + $workdates->count();
                                     @endphp
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;" 
+                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
                                         <h6><b>Người lập báo cáo</b></h6>
                                     </td>
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;" 
+                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>{{ Auth::user()->department->department_name }}</b></h6>
+                                        <h6><b>{{ $depart->department_name }}</b></h6>
                                     </td>
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;" 
+                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
                                         <h6><b>Giám đốc phụ trách</b></h6>
                                     </td>
@@ -336,26 +394,32 @@
                         <div class="table-responsive d-print-table">
                             <table class="table table-sm table-bordered" id="table-data-export2">
                                 <tr class="noborder">
-                                        @php
-                                            $coltop2 = 13 + $workdates->count();
-                                        @endphp
-                                        <td colspan="{{ $coltop2 }}"
-                                            class="text-center border-right-0 border-top-0 border-bottom-0 border-left-0 noborder" style="text-align: center;vertical-align: middle;">
-                                            <div class="text-center">
-                                                <h5>BẢNG CHẤM CÔNG - CÔNG TY CỔ PHẦN DỊCH VỤ CONTAINER TÂN CẢNG THÁNG {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}</h5>
-                                            </div>
-                                        </td>
-                                </tr> 
+                                    @php
+                                        $coltop2 = 13 + $workdates->count();
+                                    @endphp
+                                    <td colspan="{{ $coltop2 }}"
+                                        class="text-center border-right-0 border-top-0 border-bottom-0 border-left-0 noborder"
+                                        style="text-align: center;vertical-align: middle;">
+                                        <div class="text-center">
+                                            <h5>BẢNG CHẤM CÔNG - CÔNG TY CỔ PHẦN DỊCH VỤ CONTAINER TÂN CẢNG THÁNG
+                                                {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}
+                                            </h5>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <tr class="noborder">
                                     <td colspan="{{ $coltop2 }}"
-                                            class="text-center border-right-0 border-top-0 border-bottom-0 border-left-0 noborder" style="text-align: center;vertical-align: middle;">
+                                        class="text-center border-right-0 border-top-0 border-bottom-0 border-left-0 noborder"
+                                        style="text-align: center;vertical-align: middle;">
                                         <div class="text-center">
                                             <h6>{{ $depart->department_name }}</h6>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr class="noborder">
-                                    <td  style="text-align: right;vertical-align: middle;" class="text-center  border-top-0  border-right-0 border-bottom-0 border-left-0 noborder" colspan="{{ $coltop2 }}" >
+                                    <td style="text-align: right;vertical-align: middle;"
+                                        class="text-center  border-top-0  border-right-0 border-bottom-0 border-left-0 noborder"
+                                        colspan="{{ $coltop2 }}">
                                         <div class="text-right">
                                             Ngày công định mức: <b>{{ $workdaysContact }}</b>
                                         </div>
@@ -363,9 +427,12 @@
                                 </tr>
 
                                 <tr class="table-primary" style="text-align: center">
-                                    <td style="background-color:#b8daff;border-color: #7abaff;"  class="text-center">STT</td>
-                                    <td style="background-color:#b8daff;border-color: #7abaff;"  class="text-center ">MSNV</td>
-                                    <td style="background-color:#b8daff;border-color: #7abaff;"  class="text-center ">Họ Tên</td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;" class="text-center">STT
+                                    </td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;" class="text-center ">MSNV
+                                    </td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;" class="text-center ">Họ
+                                        Tên</td>
                                     @foreach ($workdates as $workdate)
                                         <td class="text-center"
                                             @if ($workdate->isWeekend) style="background-color:#FAFAD2;border-color: #7abaff;" 
@@ -375,18 +442,18 @@
                                             {{ \Carbon\Carbon::parse($workdate->workdate)->format('d') }}
                                         </td>
                                     @endforeach
-                                    <td style="background-color:#b8daff;border-color: #7abaff;" ><b>Cdư Ttrước</b></td>
-                                    <td style="background-color:#b8daff;border-color: #7abaff;" ><b>LV</b></td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;"><b>Cdư Ttrước</b></td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;"><b>LV</b></td>
 
-                                    <td style="background-color:#b8daff;border-color: #7abaff;" >Phép</td>
-                                    <td style="background-color:#b8daff;border-color: #7abaff;" >Ốm</td>
-                                    <td style="background-color:#b8daff;border-color: #7abaff;" ><b>Tổng<b></td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;">Phép</td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;">Ốm</td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;"><b>Tổng<b></td>
                                     {{-- <td style="background-color:#b8daff;border-color: #7abaff;" ><b>Làm thêm</b></td> --}}
-                                    <td style="background-color:#b8daff;border-color: #7abaff;" ><b>Tổng Công<b></td>
-                                    <td style="background-color:#b8daff;border-color: #7abaff;" >Trực lễ</td>
-                                    <td style="background-color:#b8daff;border-color: #7abaff;" ><b>Cdư Tnày</b></td>
-                                    <td style="background-color:#b8daff;border-color: #7abaff;" >Hệ số</td>
-                                    <td style="background-color:#b8daff;border-color: #7abaff;" >Xếp Loại</td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;"><b>Tổng Công<b></td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;">Trực lễ</td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;"><b>Cdư Tnày</b></td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;">Hệ số</td>
+                                    <td style="background-color:#b8daff;border-color: #7abaff;">Xếp Loại</td>
                                 </tr>
 
                                 @foreach ($contact_employees as $employee)
@@ -550,7 +617,7 @@
                                                 @if ($timesheet->workdate_id == $workdate->id && isset($timesheet->overtime))
                                                     @php
                                                         $tmpOver = true;
-                                                        $valOver = $timesheet->overtime ;
+                                                        $valOver = $timesheet->overtime;
                                                     @endphp
                                                 @endif
                                             @endforeach
@@ -558,7 +625,7 @@
                                                 <td class="text-center"
                                                     @if ($workdate->isWeekend) style="background-color:#FAFAD2;border: 1px solid #dee2e6;" 
                                             @elseif ($workdate->isHoliday) style="background-color:#CCFFFF;border: 1px solid #dee2e6;" @endif>
-                                                         {{round($valOver, 1)}}
+                                                    {{ round($valOver, 1) }}
                                                 </td>
                                             @else
                                                 <td class="text-center"
@@ -582,43 +649,49 @@
 
                                     </tr>
                                 @endforeach
-                                @if (Auth::user()->level_id > 1 && Auth::user()->department_id != 13)
-                                <tr class="noborder">
-                                    @php
-                                        $col = 10 + $workdates->count();
-                                    @endphp
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>Người lập báo cáo</b></h6>
-                                    </td>
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>{{ Auth::user()->department->department_name }}</b></h6>
-                                    </td>
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>Phó giám đốc phụ trách</b></h6>
-                                    </td>
-                                </tr>
-                            @else
-                                <tr class="noborder">
-                                    @php
-                                        $col = 10 + $workdates->count();
-                                    @endphp
-                                    <td style="text-align: center;vertical-align: middle;" colspan="{{ $col / 3 }}"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>Người lập báo cáo</b></h6>
-                                    </td>
-                                    <td style="text-align: center;vertical-align: middle;" colspan="{{ $col / 3 }}"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>{{ Auth::user()->department->department_name }}</b></h6>
-                                    </td>
-                                    <td style="text-align: center;vertical-align: middle;" colspan="{{ $col / 3 }}"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>Giám đốc phụ trách</b></h6>
-                                    </td>
-                                </tr>
-                            @endif
+                                @if (Auth::user()->level_id > 1)
+                                    <tr class="noborder">
+                                        @php
+                                            $col = 10 + $workdates->count();
+                                        @endphp
+                                        <td colspan="{{ $col / 3 }}"
+                                            style="text-align: center;vertical-align: middle;"
+                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                            <h6><b>Người lập báo cáo</b></h6>
+                                        </td>
+                                        <td colspan="{{ $col / 3 }}"
+                                            style="text-align: center;vertical-align: middle;"
+                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                            <h6><b>{{ $depart->department_name }}</b></h6>
+                                        </td>
+                                        <td colspan="{{ $col / 3 }}"
+                                            style="text-align: center;vertical-align: middle;"
+                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                            <h6><b>Phó giám đốc phụ trách</b></h6>
+                                        </td>
+                                    </tr>
+                                @else
+                                    <tr class="noborder">
+                                        @php
+                                            $col = 10 + $workdates->count();
+                                        @endphp
+                                        <td style="text-align: center;vertical-align: middle;"
+                                            colspan="{{ $col / 3 }}"
+                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                            <h6><b>Người lập báo cáo</b></h6>
+                                        </td>
+                                        <td style="text-align: center;vertical-align: middle;"
+                                            colspan="{{ $col / 3 }}"
+                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                            <h6><b>{{ $depart->department_name }}</b></h6>
+                                        </td>
+                                        <td style="text-align: center;vertical-align: middle;"
+                                            colspan="{{ $col / 3 }}"
+                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                            <h6><b>Giám đốc phụ trách</b></h6>
+                                        </td>
+                                    </tr>
+                                @endif
                             </table>
                         </div>
                     @endif
@@ -628,9 +701,13 @@
                     <div class="d-print-none">
                         <a class="btn btn-success" data-toggle="modal" data-target="#confirmReportModal">Tính công</a>
                         <a class="btn btn-primary" id="btnPrint">In</a>
-                        <a class="btn btn-danger" download="DuLieuChamCongChinhThuc.xls" href="#" onclick="return ExcellentExport.excel(this, 'table-data-export');"><i class="fa fa-file-excel"></i> Xuất file chính thức </a>
-                        <a class="btn btn-warning" download="DuLieuChamCongKhoanViec.xls" href="#" onclick="return ExcellentExport.excel(this, 'table-data-export2');"><i class="fa fa-file-excel"></i> Xuất file khoán việc</a>
-                   
+                        <a class="btn btn-danger" download="DuLieuChamCongChinhThuc.xls" href="#"
+                            onclick="return ExcellentExport.excel(this, 'table-data-export');"><i
+                                class="fa fa-file-excel"></i> Xuất file chính thức </a>
+                        <a class="btn btn-warning" download="DuLieuChamCongKhoanViec.xls" href="#"
+                            onclick="return ExcellentExport.excel(this, 'table-data-export2');"><i
+                                class="fa fa-file-excel"></i> Xuất file khoán việc</a>
+
                     </div>
                 @endif
             </div>
@@ -683,7 +760,7 @@
         $('#btnPrint').click(function(e) {
             window.print();
         });
-       
+
         // function printDiv() {
         //     var divToPrint = window;
         //     var htmlToPrint = '' +

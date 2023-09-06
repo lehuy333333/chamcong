@@ -80,7 +80,7 @@
                             </a>
                         </li> --}}
                         <li class="nav-item">
-                            <a href="{{ url('/report/timesheet') }}" class="nav-link">
+                            <a href="{{ url('/report/index') }}" class="nav-link">
                                 <i class="fas fa-chart-pie nav-icon"></i>
                                 <p>Báo cáo chấm công</p>
                             </a>

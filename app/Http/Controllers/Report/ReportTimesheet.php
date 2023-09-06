@@ -43,10 +43,10 @@ class ReportTimesheet extends Controller
         return view('pages.Report.index', compact('message', 'departments'));
     }
 
-    public function getReport(Request $request)
+    public function getReport($department_id, $month)
     {
-        $month = Carbon::parse($request->month);
-        $depart = department::find($request->department);
+        $month = Carbon::parse($month);
+        $depart = department::find($department_id);
 
         $from = $month->copy()->startOfMonth();
         $to = $month->copy()->endOfMonth();
@@ -71,6 +71,7 @@ class ReportTimesheet extends Controller
     
     public function finalReport(Request $request)
     {
+        
         $month = Carbon::parse($request->month);
         $fromMonth = $month->copy()->startOfMonth();
         $toMonth = $month->copy()->endOfMonth();
@@ -358,10 +359,9 @@ class ReportTimesheet extends Controller
             );
         };
 
+        $message = 'Đã hoàn tất chấm công';
 
-        // $departments = department::all();
-        // return view('pages.Report.index1', compact('departments'));
+        return redirect('/report/'.$department->id.'/'.$month->toDateString())->with('message', 'Đã hoàn tất chấm công tháng '.$month->month.'/'.$month->year);
     }
-
 
 }
