@@ -45,7 +45,7 @@ class AuthController extends Controller
             $request->session()->put('yearActived', $request->get('year_actived'));
             
             if (Auth::user()->level_id != 3) {
-                return redirect('/report/timesheet');
+                return redirect('/report/index');
             } else {
                 return redirect('/timesheet/Calendar');
             } 
