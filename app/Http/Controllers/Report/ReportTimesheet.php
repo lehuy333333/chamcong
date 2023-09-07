@@ -55,8 +55,8 @@ class ReportTimesheet extends Controller
             ->orderBy('workdate', 'asc')
             ->get();
 
-        $payroll_employees = employees::where('department_id', $depart->id)->where('employee_type_id', 1)->orderBy('firstname')->get();
-        $contact_employees = employees::where('department_id', $depart->id)->where('employee_type_id', 2)->orderBy('firstname')->get();
+        $payroll_employees = employees::where('department_id', $department_id)->where('employee_type_id', 1)->orderBy('firstname')->get();
+        $contact_employees = employees::where('department_id', $department_id)->where('employee_type_id', 2)->orderBy('firstname')->get();
         $departments = department::all();
 
         //1: loại chính thức
@@ -66,6 +66,11 @@ class ReportTimesheet extends Controller
 
         // return view('pages.Report.index', compact('workdates', 'reports', 'workdaysPayroll', 'workdaysContact'));
         return view('pages.Report.index1', compact('workdates', 'payroll_employees', 'contact_employees', 'workdaysPayroll', 'workdaysContact', 'departments', 'month', 'depart'));
+    }
+
+    public function export($department_id, $month){
+        
+        return Excel::download(new TimesheetExport($department_id, $month), 'report.xlsx');
     }
 
     

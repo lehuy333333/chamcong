@@ -1,19 +1,20 @@
 <table>
     <tr>
-        <td colspan="{{ 9 + $workdates->count() }}">
-            <h5>BẢNG CHẤM CÔNG KHỐI CHÍNH THỨC THÁNG
-                {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}</h5>
+        <td colspan="{{ 13 + $workdates->count() }}">
+            <h5>BẢNG CHẤM CÔNG - CÔNG TY CỔ PHẦN DỊCH VỤ CONTAINER TÂN CẢNG THÁNG
+                {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}
+            </h5>
         </td>
     </tr>
     <tr>
-        <td colspan="{{ 8 + $workdates->count() }}"></td>
-        <td>Ngày công định mức:
-            <b>{{ $workdaysPayroll }}</b></td>
+        <td colspan="{{ 13 + $workdates->count() }}">
+            <b>Ngày công định mức:{{ $workdaysPayroll }}</b>
+        </td>
     </tr>
     <tr>
-        <td >STT</td>
+        <td>STT</td>
         <td>MSNV</td>
-        <td >Họ Tên</td>
+        <td>Họ Tên</td>
         @foreach ($workdates as $workdate)
             <td>
                 {{ \Carbon\Carbon::parse($workdate->workdate)->format('d') }}
@@ -28,11 +29,11 @@
         <td>Xếp loại</td>
     </tr>
 
-    @foreach ($payroll_employees as $employee)
+    {{-- @foreach ($payroll_employees as $employee)
         <tr>
-            <th rowspan="3" scope="row"><b>{{ $loop->index + 1 }}</b></td>
-            <td rowspan="3">{{ Str::upper($employee->employeeID) }}</td>
-            <td rowspan="3">
+            <th><b>{{ $loop->index + 1 }}</b></td>
+            <td>{{ Str::upper($employee->employeeID) }}</td>
+            <td>
                 <b>
                     {{ Str::upper($employee->lastname . ' ' . $employee->firstname) }}</b>
             </td>
@@ -71,9 +72,9 @@
                     @endif
                 @endforeach
                 @if (!is_null($tmp))
-                    <td >{{ $tmp }}</td>
+                    <td>{{ $tmp }}</td>
                 @else
-                    <td ></td>
+                    <td></td>
                 @endif
             @endforeach
 
@@ -165,5 +166,5 @@
             <td></td>
             <td></td>
         </tr>
-    @endforeach
+    @endforeach --}}
 </table>

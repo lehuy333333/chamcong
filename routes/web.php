@@ -145,7 +145,9 @@ Route::get('report/{department_id}/{month}', [ReportTimesheet::class, 'getReport
 Route::get('report/delete', [ReportTimesheet::class, 'delete']);
 Route::post('report/delete', [ReportTimesheet::class, 'deleteTimesheet']);
 //Route::post('report/timesheet', [ReportTimesheet::class, 'getReport']);
-Route::post('report/export', [ReportTimesheet::class, 'finalReport']);
+Route::post('report/autoCalculate', [ReportTimesheet::class, 'finalReport']);
+
+Route::get('report/export/{department_id}/{month}', [ReportTimesheet::class, 'export']);
 
 
 

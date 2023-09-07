@@ -710,6 +710,8 @@
 
                     </div>
                 @endif
+
+                <a href="{{url('report/export/'.$depart->id.'/'.$month)}}">asdasdasd</a>
             </div>
         @endif
     </div>
@@ -732,7 +734,7 @@
                             xuất báo cáo!
                         </i> --}}
                         <i>Bạn có muốn tính công?</i>
-                        <form action="{{ url('report/export') }}" method="POST" id="exportReport">
+                        <form action="{{ url('report/autoCalculate') }}" method="POST" id="exportReport">
                             @csrf
                             <input type="hidden" name="department" value="{{ isset($depart) ? $depart->id : '' }}">
                             <input type="hidden" name="month" value="{{ isset($month) ? $month : '' }}">
