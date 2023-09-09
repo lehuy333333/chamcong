@@ -2,14 +2,11 @@
 
 namespace App\Exports;
 
-use App\Models\timesheets;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use App\Models\workdates;
 use App\Models\employees;
 use App\Models\department;
-use App\Models\reports;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use Maatwebsite\Excel\Concerns\WithEvents;
@@ -41,7 +38,6 @@ class payroll_export implements FromView, WithEvents, WithTitle
         $payroll_employees = employees::where('department_id', $this->department_id)->where('employee_type_id', 1)->orderBy('firstname')->get();
 
         $workdaysPayroll = app('App\Http\Controllers\timesheet\CalendarController')->getBaseWorkDay(1, $this->month);
-        $workdaysContact = app('App\Http\Controllers\timesheet\CalendarController')->getBaseWorkDay(2, $this->month);
 
         $workdates = workdates::whereBetween('workdate', [$this->from, $this->to])
             ->orderBy('workdate', 'asc')
@@ -52,7 +48,6 @@ class payroll_export implements FromView, WithEvents, WithTitle
         return view('pages.Report.payroll_template', [
             'payroll_employees' =>  $payroll_employees,
             'workdaysPayroll' => $workdaysPayroll,
-            'workdaysContact' => $workdaysContact,
             'workdates' => $workdates,
             'department' => $department,
         ]);
@@ -61,19 +56,18 @@ class payroll_export implements FromView, WithEvents, WithTitle
     public function registerEvents(): array
     {
         return [
+
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getStyle('A:' . $event->sheet->getHighestColumn())->getFont()->setName('Times New Roman');
-                $event->sheet->getStyle('A:' . $event->sheet->getHighestColumn())->getFont()->setSize(8);
-                $event->sheet->getStyle('A5:A100')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-                $event->sheet->getStyle('B5:B100')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-                $event->sheet->getStyle('C5:C100')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                $event->sheet->getStyle('2:' . $event->sheet->getHighestRow())->getFont()->setSize(8);
+                $event->sheet->getStyle('A:' . $event->sheet->getHighestColumn())->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
                 $payroll_employees = employees::where('department_id', $this->department_id)->where('employee_type_id', 1)->orderBy('firstname')->get();
 
                 $event->sheet->getStyle('A:' . $event->sheet->getHighestColumn())->getAlignment()->setHorizontal('center');
                 $event->sheet->getStyle('3')->getAlignment()->setHorizontal('right');
-                $event->sheet->getStyle('B5:B100')->getAlignment()->setHorizontal('left');
-                $event->sheet->getStyle('C5:C100')->getAlignment()->setHorizontal('left');
+                $event->sheet->getStyle('B5:B' . $event->sheet->getHighestRow())->getAlignment()->setHorizontal('left');
+                $event->sheet->getStyle('C5:C' . $event->sheet->getHighestRow())->getAlignment()->setHorizontal('left');
 
                 for ($i = 'A'; $i != $event->sheet->getHighestColumn(); $i++) {
                     $event->sheet->getColumnDimension($i)->setWidth(4.5);
@@ -82,9 +76,19 @@ class payroll_export implements FromView, WithEvents, WithTitle
 
                 $event->sheet->getDelegate()->getRowDimension(4)->setRowHeight(40);
                 $event->sheet->getStyle('4')->getAlignment()->setWrapText(true);
-                
+
                 $event->sheet->getColumnDimension('B')->setAutoSize(true);
                 $event->sheet->getColumnDimension('C')->setAutoSize(true);
+
+                $event->sheet->calculateColumnWidths();
+                $calculatedWidth_b = $event->sheet->getColumnDimension('B')->getWidth();
+                $calculatedWidth_c = $event->sheet->getColumnDimension('C')->getWidth();
+
+                $event->sheet->getColumnDimension('B')->setAutoSize(false);
+                $event->sheet->getColumnDimension('C')->setAutoSize(false);
+
+                $event->sheet->getColumnDimension('B')->setWidth((int) $calculatedWidth_b * 1.1);
+                $event->sheet->getColumnDimension('C')->setWidth((int) $calculatedWidth_c * 1.1);
 
                 for ($i = 'A'; $i != $event->sheet->getHighestColumn(); $i++) {
                     $event->sheet->getStyle($i . '4:' . $i . $payroll_employees->count() * 3 + 4)
@@ -93,9 +97,19 @@ class payroll_export implements FromView, WithEvents, WithTitle
                 $event->sheet->getStyle($event->sheet->getHighestColumn() . '4:' . $event->sheet->getHighestColumn() . $payroll_employees->count() * 3 + 4)
                     ->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
+                $event->sheet->getPageSetup()
+                    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+                $event->sheet->getPageSetup()
+                    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
+
+                $event->sheet->getProtection()->setPassword('password');
+                $event->sheet->getProtection()->setSheet(true);
             },
+
+
         ];
     }
+
     public function title(): string
     {
         return 'Chính thức';

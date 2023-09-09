@@ -268,7 +268,7 @@
     @if (Auth::user()->level_id > 1)
         <tr class="noborder">
             @php
-                $col = 14 + $workdates->count();
+                $col = 13 + $workdates->count();
             @endphp
             <td colspan="{{ $col / 3 }}">
                 <h6><b>Người lập báo cáo</b></h6>
@@ -283,7 +283,7 @@
     @else
         <tr class="noborder">
             @php
-                $col = 14 + $workdates->count();
+                $col = 13 + $workdates->count();
             @endphp
             <td colspan="{{ $col / 3 }}">
                 <h6><b>Người lập báo cáo</b></h6>
