@@ -108,10 +108,6 @@ class contact_export implements FromView, WithEvents, WithTitle
                 $event->sheet->getProtection()->setPassword('password');
                 $event->sheet->getProtection()->setSheet(true);
             },
-
-            BeforeExport::class  => function (BeforeExport $event) {
-                
-            },
         ];
     }
 
