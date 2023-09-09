@@ -139,7 +139,7 @@
 
                             @foreach ($payroll_employees as $employee)
                                 <tr class="border-primary bg-light">
-                                    <th style="border: 1px solid #dee2e6;" rowspan="3" scope="row">
+                                    <td style="border: 1px solid #dee2e6;" rowspan="3" scope="row">
                                         <b>{{ $loop->index + 1 }}</b></td>
                                     <td style="border: 1px solid #dee2e6;" rowspan="3">
                                         {{ Str::upper($employee->employeeID) }}</td>
@@ -349,7 +349,7 @@
                             @if (Auth::user()->level_id > 1)
                                 <tr class="noborder">
                                     @php
-                                        $col = 10 + $workdates->count();
+                                        $col = 14 + $workdates->count();
                                     @endphp
                                     <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
@@ -367,7 +367,7 @@
                             @else
                                 <tr class="noborder">
                                     @php
-                                        $col = 10 + $workdates->count();
+                                        $col = 14 + $workdates->count();
                                     @endphp
                                     <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
@@ -652,7 +652,7 @@
                                 @if (Auth::user()->level_id > 1)
                                     <tr class="noborder">
                                         @php
-                                            $col = 10 + $workdates->count();
+                                            $col = 14 + $workdates->count();
                                         @endphp
                                         <td colspan="{{ $col / 3 }}"
                                             style="text-align: center;vertical-align: middle;"
@@ -673,7 +673,7 @@
                                 @else
                                     <tr class="noborder">
                                         @php
-                                            $col = 10 + $workdates->count();
+                                            $col = 14 + $workdates->count();
                                         @endphp
                                         <td style="text-align: center;vertical-align: middle;"
                                             colspan="{{ $col / 3 }}"
@@ -712,6 +712,8 @@
                 @endif
 
                 <a href="{{url('report/export/'.$depart->id.'/'.$month)}}">asdasdasd</a>
+
+                
             </div>
         @endif
     </div>

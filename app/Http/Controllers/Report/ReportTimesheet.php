@@ -12,7 +12,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Exports\TimesheetExport;
+use App\Exports\payroll_export;
+use App\Exports\contact_export;
+use App\Exports\total_export;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -70,7 +72,7 @@ class ReportTimesheet extends Controller
 
     public function export($department_id, $month){
         
-        return Excel::download(new TimesheetExport($department_id, $month), 'report.xlsx');
+        return Excel::download(new total_export($department_id, $month), 'report.xlsx');
     }
 
     
