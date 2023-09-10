@@ -53,7 +53,8 @@
                                     @endphp
                                 @endif
                             @endif
-                            <option value="{{ $department->id }}" {{$tmp_depart}}>{{ $department->department_name }}</option>
+                            <option value="{{ $department->id }}" {{ $tmp_depart }}>{{ $department->department_name }}
+                            </option>
                         @endforeach
                     @endif
                 </select>
@@ -65,15 +66,13 @@
                         "#month").val());
                 });
             </script>
-
+        </div>
+        @if (isset($workdates))
             <ul class="nav nav-pills ">
                 <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Chính thức</a></li>
                 <li class="nav-item"><a class="nav-link" href="#KV" data-toggle="tab">Khoán việc</a></li>
                 <!--<li class="nav-item"><a class="nav-link" href="#GT" data-toggle="tab">Giải Trình</a></li>-->
             </ul>
-
-        </div>
-        @if (isset($workdates))
             <div class="tab-content">
                 <div class="active tab-pane" id="activity">
                     <div class="table-responsive d-print-table">
@@ -140,7 +139,8 @@
                             @foreach ($payroll_employees as $employee)
                                 <tr class="border-primary bg-light">
                                     <td style="border: 1px solid #dee2e6;" rowspan="3" scope="row">
-                                        <b>{{ $loop->index + 1 }}</b></td>
+                                        <b>{{ $loop->index + 1 }}</b>
+                                    </td>
                                     <td style="border: 1px solid #dee2e6;" rowspan="3">
                                         {{ Str::upper($employee->employeeID) }}</td>
                                     <td style="border: 1px solid #dee2e6;" rowspan="3">
@@ -697,23 +697,27 @@
                     @endif
                 </div>
 
-                @if (Auth::user()->level_id > 1)
-                    <div class="d-print-none">
-                        <a class="btn btn-success" data-toggle="modal" data-target="#confirmReportModal">Tính công</a>
-                        <a class="btn btn-primary" id="btnPrint">In</a>
+
+                <div class="d-print-none">
+                    @if (Auth::user()->level_id > 1)
+                        <a class="btn btn-success" data-toggle="modal" data-target="#confirmReportModal"><i
+                                class="fas fa-calculator"></i> Tính công</a>
+                        {{-- <a class="btn btn-primary" id="btnPrint">In</a>
                         <a class="btn btn-danger" download="DuLieuChamCongChinhThuc.xls" href="#"
                             onclick="return ExcellentExport.excel(this, 'table-data-export');"><i
                                 class="fa fa-file-excel"></i> Xuất file chính thức </a>
                         <a class="btn btn-warning" download="DuLieuChamCongKhoanViec.xls" href="#"
                             onclick="return ExcellentExport.excel(this, 'table-data-export2');"><i
-                                class="fa fa-file-excel"></i> Xuất file khoán việc</a>
+                                class="fa fa-file-excel"></i> Xuất file khoán việc</a> --}}
+                    @endif
+                    <a href="{{ url('report/export/' . $depart->id . '/' . $month) }}" class="btn btn-primary">
+                        <i class="fas fa-file-download"></i> Xuất file excel
+                    </a>
+                </div>
 
-                    </div>
-                @endif
 
-                <a href="{{url('report/export/'.$depart->id.'/'.$month)}}">asdasdasd</a>
 
-                
+
             </div>
         @endif
     </div>
@@ -736,7 +740,7 @@
                             xuất báo cáo!
                         </i> --}}
                         <i>Bạn có muốn tính công?</i>
-                        <form action="{{ url('report/autoCalculate') }}" method="POST" id="exportReport">
+                        <form action="{{ url('report/autoCalculate') }}" method="POST" id="autoCalculate">
                             @csrf
                             <input type="hidden" name="department" value="{{ isset($depart) ? $depart->id : '' }}">
                             <input type="hidden" name="month" value="{{ isset($month) ? $month : '' }}">
@@ -757,7 +761,7 @@
 
         $('#submitButton').click(function(e) {
             e.preventDefault();
-            var form = $('#exportReport');
+            var form = $('#autoCalculate');
             form.submit();
         });
 

@@ -52,11 +52,10 @@
                 @csrf
                 <input type="file" name="taskImport" id="taskImport" accept=".xlsx, .csv, .xls" hidden=true
                     onchange="this.form.submit()">
-                <label for="taskImport"><i class="btn btn-primary">Thêm từ file excel</i></label>
+                <label for="taskImport"><span class="btn btn-secondary"><i class="fas fa-file-import"></i> Thêm từ file excel</span></label>
 
             </form>
             <div class="row">
-
                 @if ($errors->any())
                     <div class="alert alert-danger col-md-12" role="alert">
                         @if ($errors->any())

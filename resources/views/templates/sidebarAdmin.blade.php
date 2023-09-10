@@ -37,7 +37,8 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 {{-- ---Quản Lý Công Việc--- --}}
@@ -54,24 +55,24 @@
                     </a>
                     <ul class="nav nav-treeview" style="background-color: rgb(100, 100, 100);">
                         @if (Auth::user()->level_id == 3)
-                        <li class="nav-item">
-                            <a href="{{ url('/timesheet/Calendar') }}" class="nav-link">
-                                <i class="fas fa-tasks nav-icon"></i>
-                                <p>Chấm công</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/employee/personal') }}" class="nav-link">
-                                <i class="fas fa-tasks nav-icon"></i>
-                                <p>Hệ số tổ</p>
-                            </a>
-                        </li>
-                         <li class="nav-item">
-                          <a href="{{ url('/timesheet/getSurplusMonth') }}" class="nav-link">
-                                <i class="fas fa-tasks nav-icon"></i>
-                             <p>Công dư tháng trước</p>
-                          </a>
-                        </li> 
+                            <li class="nav-item">
+                                <a href="{{ url('/timesheet/Calendar') }}" class="nav-link">
+                                    <i class="fas fa-tasks nav-icon"></i>
+                                    <p>Chấm công</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/employee/personal') }}" class="nav-link">
+                                    <i class="fas fa-superscript nav-icon"></i>
+                                    <p>Hệ số tổ</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/timesheet/getSurplusMonth') }}" class="nav-link">
+                                    <i class="fas fa-history nav-icon"></i>
+                                    <p>Công dư tháng trước</p>
+                                </a>
+                            </li>
                         @endif
                         {{-- <li class="nav-item">
                             <a href="{{ url('/timesheet') }}" class="nav-link">
@@ -85,15 +86,15 @@
                                 <p>Báo cáo chấm công</p>
                             </a>
                         </li>
-                        
-                         <li class="nav-item">
+
+                        <li class="nav-item">
                             <a href="{{ url('/tasks') }}" class="nav-link">
-                                <i class="fas fa-chart-pie nav-icon"></i>
+                                <i class="fas fa-handshake nav-icon"></i>
                                 <p>Hạng mục công việc</p>
                             </a>
                         </li>
 
-                       
+
 
                         @if (Auth::user()->level_id != 3)
                             <li class="nav-item">
@@ -104,15 +105,14 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                            <a href="{{ url('/timesheet/getSurplusMonth') }}" class="nav-link">
-                                <i class="fas fa-tasks nav-icon"></i>
-                                <p>Công dư tháng trước</p>
-                            </a>
-                        </li>
-                           <li class="nav-item">
+                                <a href="{{ url('/timesheet/getSurplusMonth') }}" class="nav-link">
+                                    <i class="fas fa-history nav-icon"></i>
+                                    <p>Công dư tháng trước</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('/workdate/index') }}" class="nav-link">
-                                    <i class="far fa-regular fa-calendar nav-icon"></i>
-                                    
+                                    <i class="fas fa-glass-cheers nav-icon"></i>
                                     <p>Ngày lễ</p>
                                 </a>
                             </li>
@@ -155,20 +155,19 @@
                                     <i class="fas fa-fw fa-user-circle nav-icon"></i>
                                     <p>Nhân Viên</p>
                                 </a>
-                            </li>   
-                     
+                            </li>
+
                             @if (Auth::user()->level_id == 1)
-                               
                                 <li class="nav-item">
                                     <a href="{{ url('/level/index') }}" class="nav-link">
-                                        <i class="fas fa-tag nav-icon"></i>
+                                        <i class="fas fa-user-tag nav-icon"></i>
                                         {{-- <i class="fas fa-tag"></i> --}}
                                         <p>Phân quyền</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/position/index') }}" class="nav-link">
-                                        <i class="fas fa-tag nav-icon"></i>
+                                        <i class="fas fa-id-card-alt nav-icon"></i>
                                         {{-- <i class="fas fa-tag"></i> --}}
                                         <p>Chức Vụ</p>
                                     </a>
@@ -181,16 +180,16 @@
                                 </li> --}}
                                 <li class="nav-item">
                                     <a href="{{ url('/users/index') }}" class="nav-link">
-                                        <i class="far fa-address-book nav-icon"></i>
+                                        <i class="fas fa-id-card nav-icon"></i>
                                         <p>Tài khoản</p>
                                     </a>
                                 </li>
-                                 <li class="nav-item">
-                            <a href="{{ url('/report/delete') }}" class="nav-link">
-                                <i class="fas fa-trash nav-icon"></i>
-                                <p>Xoá chấm công</p>
-                            </a>
-                        </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/report/delete') }}" class="nav-link">
+                                        <i class="fas fa-trash nav-icon"></i>
+                                        <p>Xoá chấm công</p>
+                                    </a>
+                                </li>
                             @endif
 
 
