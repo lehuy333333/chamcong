@@ -70,7 +70,11 @@ class contact_export implements FromView, WithEvents, WithTitle
                 $event->sheet->getStyle('C5:C' . $event->sheet->getHighestRow())->getAlignment()->setHorizontal('left');
 
                 for ($i = 'A'; $i != $event->sheet->getHighestColumn(); $i++) {
-                    $event->sheet->getColumnDimension($i)->setWidth(4.5);
+                    if (trim($event->sheet->getCell($i . '4')->getValue()) === "Cdư Ttrước" || trim($event->sheet->getCell($i . '4')->getValue()) === "Tổng Công") {
+                        $event->sheet->getColumnDimension($i)->setWidth(6);
+                    } else {
+                        $event->sheet->getColumnDimension($i)->setWidth(4.5);
+                    }
                 }
                 $event->sheet->getColumnDimension($event->sheet->getHighestColumn())->setWidth(4.5);
 
@@ -87,8 +91,8 @@ class contact_export implements FromView, WithEvents, WithTitle
                 $event->sheet->getColumnDimension('B')->setAutoSize(false);
                 $event->sheet->getColumnDimension('C')->setAutoSize(false);
 
-                $event->sheet->getColumnDimension('B')->setWidth((int) $calculatedWidth_b * 1.1);
-                $event->sheet->getColumnDimension('C')->setWidth((int) $calculatedWidth_c * 1.1);
+                $event->sheet->getColumnDimension('B')->setWidth((int) $calculatedWidth_b * 1.2);
+                $event->sheet->getColumnDimension('C')->setWidth((int) $calculatedWidth_c * 1.4);
 
                 for ($i = 'A'; $i != $event->sheet->getHighestColumn(); $i++) {
                     $event->sheet->getStyle($i . '4:' . $i . $contact_employees->count() * 3 + 4)
@@ -101,9 +105,6 @@ class contact_export implements FromView, WithEvents, WithTitle
                     ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
                 $event->sheet->getPageSetup()
                     ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
-
-                // $event->sheet->getProtection()->setSheet(true);    // Needs to be set to true in order to enable any worksheet protection!
-                // $event->sheet->protectCells('A:Z', 'PHPExcel');
 
                 $event->sheet->getProtection()->setPassword('password');
                 $event->sheet->getProtection()->setSheet(true);

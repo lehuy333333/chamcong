@@ -7,8 +7,8 @@
             class="text-center border-right-0  border-top-0 border-bottom-0 border-left-0 noborder"
             style="text-align: center;vertical-align: middle;">
             <div class="text-center">
-                <h5>BẢNG CHẤM CÔNG - CÔNG TY CỔ PHẦN DỊCH VỤ KỸ THUẬT TÂN CẢNG THÁNG
-                    {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}</h5>
+                <h5><b>BẢNG CHẤM CÔNG - CÔNG TY CỔ PHẦN DỊCH VỤ KỸ THUẬT TÂN CẢNG THÁNG
+                    {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}</b></h5>
             </div>
         </td>
     </tr>
