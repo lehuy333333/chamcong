@@ -351,17 +351,21 @@
                                     @php
                                         $col = 14 + $workdates->count();
                                     @endphp
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
+                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
                                         <h6><b>Người lập báo cáo</b></h6>
                                     </td>
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
+                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
                                         <h6><b>{{ Auth::user()->department->department_name }}</b></h6>
                                     </td>
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
+                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>Phó giám đốc phụ trách</b></h6>
+                                        <h6><b>Phòng TCLĐ-TL</b></h6>
+                                    </td>
+                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
+                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                        <h6><b>Ban giám đốc</b></h6>
                                     </td>
                                 </tr>
                             @else
@@ -650,26 +654,27 @@
                                     </tr>
                                 @endforeach
                                 @if (Auth::user()->level_id > 1)
-                                    <tr class="noborder">
-                                        @php
-                                            $col = 14 + $workdates->count();
-                                        @endphp
-                                        <td colspan="{{ $col / 3 }}"
-                                            style="text-align: center;vertical-align: middle;"
-                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                            <h6><b>Người lập báo cáo</b></h6>
-                                        </td>
-                                        <td colspan="{{ $col / 3 }}"
-                                            style="text-align: center;vertical-align: middle;"
-                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                            <h6><b>{{ $depart->department_name }}</b></h6>
-                                        </td>
-                                        <td colspan="{{ $col / 3 }}"
-                                            style="text-align: center;vertical-align: middle;"
-                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                            <h6><b>Phó giám đốc phụ trách</b></h6>
-                                        </td>
-                                    </tr>
+                                <tr class="noborder">
+                                    @php
+                                        $col = 14 + $workdates->count();
+                                    @endphp
+                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
+                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                        <h6><b>Người lập báo cáo</b></h6>
+                                    </td>
+                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
+                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                        <h6><b>{{ Auth::user()->department->department_name }}</b></h6>
+                                    </td>
+                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
+                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                        <h6><b>Phòng TCLĐ-TL</b></h6>
+                                    </td>
+                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
+                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                        <h6><b>Ban giám đốc</b></h6>
+                                    </td>
+                                </tr>
                                 @else
                                     <tr class="noborder">
                                         @php

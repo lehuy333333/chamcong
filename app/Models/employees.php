@@ -21,7 +21,7 @@ class employees extends Model
 
     public function getFullNameAttribute() // notice that the attribute name is in CamelCase.
     {
-        return mb_convert_case(mb_strtolower($this->lastname . $this->firstname), MB_CASE_TITLE).PHP_EOL;
+        return mb_convert_case(mb_strtolower($this->lastname .' '. $this->firstname), MB_CASE_TITLE).PHP_EOL;
     }
 
     public function position()
