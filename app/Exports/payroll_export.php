@@ -71,6 +71,7 @@ class payroll_export implements FromView, WithEvents, WithTitle
                 $event->sheet->getStyle('C5:C' . $event->sheet->getHighestRow())->getAlignment()->setHorizontal('left');
 
                 for ($i = 'A'; $i != $event->sheet->getHighestColumn(); $i++) {
+<<<<<<< HEAD
                     if (trim($event->sheet->getCell($i . '4')->getValue()) === "Cdư Ttrước" || trim($event->sheet->getCell($i . '4')->getValue()) === "Tổng Công" 
                     || trim($event->sheet->getCell($i . '4')->getValue()) === "Tổng" || trim($event->sheet->getCell($i . '4')->getValue()) === "Cdư Tnày"
                     || trim($event->sheet->getCell($i . '4')->getValue()) === "LV") {
@@ -80,6 +81,12 @@ class payroll_export implements FromView, WithEvents, WithTitle
                     }
                     else {
                         $event->sheet->getColumnDimension($i)->setWidth(4);
+=======
+                    if (trim($event->sheet->getCell($i . '4')->getValue()) === "Cdư Ttrước" || trim($event->sheet->getCell($i . '4')->getValue()) === "Tổng Công") {
+                        $event->sheet->getColumnDimension($i)->setWidth(6);
+                    } else {
+                        $event->sheet->getColumnDimension($i)->setWidth(4.5);
+>>>>>>> c45ffa1ef3e0ba60cea67b58e56a7c0e01d24307
                     }
                 }
                 $event->sheet->getColumnDimension($event->sheet->getHighestColumn())->setWidth(4.5);
