@@ -35,8 +35,6 @@ Route::post('/checklogin', [AuthController::class, 'login'])->name('checklogin')
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [AuthController::class, 'signOut']);
-
-
     Route::get('/test', [AttendanceController::class, 'index']);
     //Home
     Route::get('home/index', [AuthController::class, 'home'])->name('home.index');
