@@ -61,7 +61,7 @@ class explain_export implements FromView, WithEvents, WithTitle
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getStyle('A:' . $event->sheet->getHighestColumn())->getFont()->setName('Times New Roman');
-                $event->sheet->getStyle('2:' . $event->sheet->getHighestRow())->getFont()->setSize(10);
+                $event->sheet->getStyle('2:' . $event->sheet->getHighestRow())->getFont()->setSize(12);
                 $event->sheet->getStyle('1:2')->getFont()->setSize(16);
                 $event->sheet->getStyle('A:' . $event->sheet->getHighestColumn())->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 

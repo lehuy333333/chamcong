@@ -71,6 +71,7 @@
             <ul class="nav nav-pills ">
                 <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Chính thức</a></li>
                 <li class="nav-item"><a class="nav-link" href="#KV" data-toggle="tab">Khoán việc</a></li>
+                <li class="nav-item"><a class="nav-link" href="#GT" data-toggle="tab">Giải trình</a></li>
                 <!--<li class="nav-item"><a class="nav-link" href="#GT" data-toggle="tab">Giải Trình</a></li>-->
             </ul>
             <div class="tab-content">
@@ -701,6 +702,93 @@
                         </div>
                     @endif
                 </div>
+
+                {{-- Tab giải trình --}}
+                <div class="tab-pane" id="GT">
+                    @if ($contact_employees->count() > 0)
+                        <div class="table-responsive d-print-table">
+                            <table class="table table-sm table-bordered" id="table-data-export">
+                                <tr class="noborder">
+                                    <td colspan=6 class="text-center border-right-0  border-top-0 border-bottom-0 border-left-0 noborder"
+                                        style="text-align: center;vertical-align: middle;">
+                                        <div class="text-center">
+                                            <h5><b>BẢNG GIẢI TRÌNH - CÔNG TY CỔ PHẦN DỊCH VỤ KỸ THUẬT TÂN CẢNG THÁNG
+                                                    {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}</b></h5>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="noborder">
+                                    <td colspan=6 class="text-center border-right-0  border-top-0 border-bottom-0 border-left-0 noborder"
+                                        style="text-align: center;vertical-align: middle;">
+                                        <div class="text-center">
+                                            <h6><b>{{ $depart->department_name}}</b></h6>
+                                        </div>
+                                    </td>
+                                </tr>
+                            
+                                <tr class="table-primary">
+                                    <td style="background-color:#b8daff;">STT</td>
+                                    <td style="background-color:#b8daff;">Ngày</td>
+                                    <td style="background-color:#b8daff;">MSNV</td>
+                                    <td style="background-color:#b8daff;">Họ Tên</td>
+                                    {{-- @foreach ($workdates as $workdate)
+                                        <td class="text-center"
+                                            @if ($workdate->isWeekend) style="background-color:#FAFAD2;" 
+                                            @elseif ($workdate->isHoliday) style="background-color:#CCFFFF;"
+                                            @else style="background-color:#b8daff;" @endif>
+                            
+                                            {{ \Carbon\Carbon::parse($workdate->workdate)->format('d') }}
+                                        </td>
+                                    @endforeach --}}
+                                    <td style="background-color:#b8daff;"><b>Giải trình</b></td>
+                                </tr>
+                            
+                                @php
+                                    $count = 0;
+                                @endphp
+                                @foreach ($depart->employees as $employee)
+                                    @php
+                                        $timesheets = $employee
+                                            ->timesheets()
+                                            ->whereBetween('workdate_id', [$workdates->first()->id, $workdates->last()->id])
+                                            ->get()
+                                            ->sortBy('workdate_id');
+                                        
+                                    @endphp
+                            
+                                    @foreach ($workdates as $workdate)
+                                        @php
+                                            $tmp = null;
+                                            //$wsc = 0;
+                                        @endphp
+                            
+                                        @foreach ($timesheets as $timesheet)
+                                            @if ($timesheet->workdate_id == $workdate->id)
+                                                @if (@isset($timesheet->explain))
+                                                    @php
+                                                        $count++;
+                                                    @endphp
+                                                    <tr>
+                                                        <td>{{ $count }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($workdate->workdate)->format('d-m') }}</td>
+                                                        <td>{{ $employee->employeeID }}</td>
+                                                        <td><b>{{ $employee->fullname }}</b></td>
+                                                        <td>{{ $timesheet->explain }}</td>
+                                                    </tr>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    @endforeach
+                                @endforeach
+                            
+                            
+                               
+                            </table>
+                        </div>
+                    @endif
+                </div>
+
+                {{-- End tab Giải trình --}}
 
 
                 <div class="d-print-none">

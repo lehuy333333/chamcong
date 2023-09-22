@@ -61,7 +61,7 @@
                         @endphp
                         <tr>
                             <td>{{ $count }}</td>
-                            <td>{{ \Carbon\Carbon::parse($workdate->workdate)->format('d') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($workdate->workdate)->format('d-m') }}</td>
                             <td>{{ $employee->employeeID }}</td>
                             <td><b>{{ $employee->fullname }}</b></td>
                             <td>{{ $timesheet->explain }}</td>
@@ -76,7 +76,7 @@
     {{-- @if (Auth::user()->level_id > 1)
         <tr class="noborder">
             @php
-                $col = 13 + $workdates->count();
+                $col = 6;
             @endphp
             <td colspan="{{ $col / 3 }}">
                 <h6><b>Người lập báo cáo</b></h6>
@@ -91,7 +91,7 @@
     @else
         <tr class="noborder">
             @php
-                $col = 13 + $workdates->count();
+                $col = 6;
             @endphp
             <td colspan="{{ $col / 3 }}">
                 <h6><b>Người lập báo cáo</b></h6>
@@ -102,6 +102,6 @@
             <td colspan="{{ $col / 3 }}">
                 <h6><b>Giám đốc phụ trách</b></h6>
             </td>
-        </tr>
+        </tr>   
     @endif --}}
 </table>
