@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-striped projects"  width="100%" cellspacing="0">
+                        <table class="table table-striped projects" width="100%" cellspacing="0">
                             <thead style="background-color: rgb(175, 200, 236)">
                                 <th style="width: 3%">STT</th>
                                 <th class="text-center">Mã NV</th>
@@ -33,7 +33,8 @@
                                             {{ csrf_field() }}
                                             <input type="hidden" value="{{ $employee->id }}" name="id">
                                             {{-- <input type="hidden" value="{{ $employee->isActive }}" name="isActive"> --}}
-                                            <input type="hidden" value="{{ $employee->department_id }}" name="department_id">
+                                            <input type="hidden" value="{{ $employee->department_id }}"
+                                                name="department_id">
                                             <input type="hidden" value="{{ $employee->position_id }}" name="position_id">
                                             <td>{{ $loop->index + 1 }}</td>
                                             <td class="text-center">
@@ -66,24 +67,24 @@
                                                     @endforeach
                                                 </select>
                                             </td> --}}
-                                            
+
                                             <td class="text-center">
                                                 <p class="show_hidden"><b>{{ $employee->personal_coefficient }}</b></p>
-                                                <input type="email" value="{{ $employee->personal_coefficient }}" name="personal_coefficient"
-                                                    class="hidden_form form-control">
+                                                <input type="email" value="{{ $employee->personal_coefficient }}"
+                                                    name="personal_coefficient" class="hidden_form form-control">
                                             </td>
 
                                             <td class="text-center">
-                                                <a href="#" class="show_hidden"><i
+                                                <a href="javascript:void(0)" class="show_hidden"><i
                                                         class="fas fa-edit show_hidden_btn">Sửa</i>
-                                                    </a>
-                                                <a href="#" class="hidden_form"><i class="fas fa-save"
+                                                </a>
+                                                <a href="javascript:void(0)" class="hidden_form"><i class="fas fa-save"
                                                         style="color: green"></i>
                                                     |</a>
-                                                <a href="#" class="hidden_form"><i class="fas fa-times"
+                                                <a href="javascript:void(0)" class="hidden_form"><i class="fas fa-times"
                                                         style="color: grey"></i>
-                                                    </a>
-                                                
+                                                </a>
+
                                             </td>
                                         </form>
                                     </tr>
@@ -91,7 +92,6 @@
                             </tbody>
                         </table>
                     </div>
-
                 @else
                     <div>
                         Chưa có dữ liệu
@@ -101,37 +101,36 @@
         </div>
     </div>
 
-    
-
-    
-        <script>
-            $(document).ready(function() {
-                $('#dataTable').DataTable();
-            });
-        </script>
-
-        <style>
-            .hidden_form {
-                display: none;
-            }
-
-        </style>
-
-        <script>
-            $(".show_hidden_btn").click(function() {
-                $(this).closest('tr').find('.hidden_form').fadeIn("fast");
-                $(this).closest('tr').find('.show_hidden').fadeOut(1);
-            });
-
-            $(".fa-times").click(function() {
-                $(this).closest('tr').find('.hidden_form').fadeOut(1);
-                $(this).closest('tr').find('.show_hidden').fadeIn("fast");
-            });
-
-            $(".fa-save").click(function() {
-                $(this).closest('tr').find('form').submit();
-            });
-        </script>
 
 
-    @endsection
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable();
+        });
+    </script>
+
+    <style>
+        .hidden_form {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $(".show_hidden_btn").click(function() {
+            $(this).closest('tr').find('.hidden_form').fadeIn("fast");
+            $(this).closest('tr').find('.show_hidden').fadeOut(1);
+        });
+
+        $(".fa-times").click(function() {
+            $(this).closest('tr').find('.hidden_form').fadeOut(1);
+            $(this).closest('tr').find('.show_hidden').fadeIn("fast");
+        });
+
+        $(".fa-save").click(function() {
+            $(this).closest('tr').find('form').submit();
+        });
+    </script>
+
+
+@endsection

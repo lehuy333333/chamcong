@@ -5,20 +5,7 @@
 @endsection
 
 @section('content')
-    <script>
-        $(document).ready(function() {
-            <?php
-            foreach ($workdates as $workdate) {
-                if ($workdate->isWeekend) {
-                    echo '$("*[data-date=' . $workdate->workdate . ']").css("background-color", "#F5F5F5");';
-                }
-            }
-            ?>
-
-        });
-    </script>
-    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -90,21 +77,35 @@
                     timeZone: 'Asia/Ho_Chi_Minh',
                     selectable: true,
                     dateClick: function(info) {
-                        
-                            window.location.href = "{{ url('/timesheet') }}/" + info.dateStr;
-                        
+                        window.location.href = "{{ url('/timesheet') }}/" + info.dateStr;
                     },
                     events: events_array,
                     eventRender: function(event, element) {
                         element.attr('title', event.tip);
+
                     },
 
                 });
 
                 calendar.render();
+                changeBgColorWeekend();
+                $(".fc-button").click(function() {
+                    changeBgColorWeekend();
+                    //alert('ád');
+                });
 
+                function changeBgColorWeekend() {
+                    <?php
+                    foreach ($workdates as $workdate) {
+                        if ($workdate->isWeekend) {
+                            echo '$("*[data-date=' . $workdate->workdate . ']").css("background-color", "#F5F5F5");';
+                        }
+                    }
+                    ?>
+                }
             });
         </script>
+
     </section>
     <!-- /.content -->
 @endsection

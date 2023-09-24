@@ -5,19 +5,6 @@
 @endsection
 
 @section('content')
-    <script>
-        $(document).ready(function() {
-            <?php
-            foreach ($workdates as $workdate) {
-                if ($workdate->isWeekend) {
-                    echo '$("*[data-date=' . $workdate->workdate . ']").css("background-color", "#F5F5F5");';
-                }
-            }
-            ?>
-
-        });
-    </script>
-
     <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -52,7 +39,8 @@
                 @csrf
                 <input type="file" name="taskImport" id="taskImport" accept=".xlsx, .csv, .xls" hidden=true
                     onchange="this.form.submit()">
-                <label for="taskImport"><span class="btn btn-secondary"><i class="fas fa-file-import"></i> Thêm từ file excel</span></label>
+                <label for="taskImport"><span class="btn btn-secondary"><i class="fas fa-file-import"></i> Thêm từ file
+                        excel</span></label>
 
             </form>
             <div class="row">
@@ -121,7 +109,21 @@
                 });
 
                 calendar.render();
+                changeBgColorWeekend();
+                $(".fc-button").click(function() {
+                    changeBgColorWeekend();
+                    //alert('ád');
+                });
 
+                function changeBgColorWeekend() {
+                    <?php
+                    foreach ($workdates as $workdate) {
+                        if ($workdate->isWeekend) {
+                            echo '$("*[data-date=' . $workdate->workdate . ']").css("background-color", "#F5F5F5");';
+                        }
+                    }
+                    ?>
+                }
             });
         </script>
         <script>
