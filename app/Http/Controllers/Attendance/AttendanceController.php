@@ -10,24 +10,33 @@ use App\Models\zkteco_devices;
 
 class AttendanceController extends Controller
 {
+    // public function index()
+    // {
+    //     $zk = new ZktecoLib('192.168.20.51', '4370');
+    //     if ($zk->connect()) {
+    //         $attendances = $zk->getAttendance();
+    //         return "connect success";
+    //     } else {
+    //         return "connect fail";
+    //     }
+    // }
+
     public function index()
     {
-        $zk = new ZktecoLib('192.168.20.51', '4370');
-        if ($zk->connect()) {
-            $attendances = $zk->getAttendance();
-            return "connect success";
-        } else {
-            return "connect fail";
-        }
-    }
-
-    public function listDevice()
-    {
         $zkteco_devices = zkteco_devices::all();
+        foreach ($zkteco_devices as $key => $device) {
+            $zk = new ZktecoLib($device->ip, $device->port);
+            if ($zk->connect()) {
+                $device->status = true;
+            } else {
+                $device->status = false;
+            }
+            $device->update();
+        }
         return view('zkteco::app', compact('zkteco_devices'));
     }
 
-    public function addDevice(Request $request)
+    public function add(Request $request)
     {
         $this->validate($request, [
             'ip'  => 'required',
@@ -37,9 +46,44 @@ class AttendanceController extends Controller
 
         $input = $request->all();
         $zk = new zkteco_devices($input);
+        return view('zkteco::app', compact('zkteco_devices'));
     }
 
-    public function syncUser($department_id, $device_id)
+    public function getDeviceById($device_id)
+    {
+        $zkteco_device = zkteco_devices::find($device_id);
+
+        return view('zkteco::app', compact('zkteco_devices'));
+    }
+
+    public function edit(Request $request)
+    {
+        $this->validate($request, [
+            'ip'  => 'required',
+            'port'  => 'required',
+            'model_name'  => 'required',
+        ]);
+
+        $input = $request->all();
+        $zk = new zkteco_devices($input);
+        return view('zkteco::app', compact('zkteco_devices'));
+    }
+
+    function delete($device_id)
+    {
+        $zkteco_device = zkteco_devices::find($device_id);
+
+        try {
+            $zkteco_device->delete();
+            $message = 'Xóa nhân viên thành công !!!';
+        } catch (Exception $e) {
+            $message = 'Nhân viên này không thể xóa, vui lòng liên hệ admin !!!';
+        } 
+
+        return redirect('/attendances/index')->with(compact('message'));
+    }
+
+    public function syncUserDevice($department_id, $device_id)
     {
         $device = zkteco_devices::find($device_id);
         $zk = new ZktecoLib($device->ip, $device->port);
@@ -56,7 +100,7 @@ class AttendanceController extends Controller
         }
     }
 
-    public function getAttendanceByDevice($device_id)
+    public function getAttendancesByDevice($device_id)
     {
         $device = zkteco_devices::find($device_id);
         $zk = new ZktecoLib($device->ip, $device->port);

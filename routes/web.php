@@ -148,4 +148,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('report/autoCalculate', [ReportTimesheet::class, 'finalReport']);
 
     Route::get('report/export/{department_id}/{month}', [ReportTimesheet::class, 'export']);
+
+    //*****Management Attendances*****
+    Route::get('attendances/list', [AttendanceController::class, 'index']);
+    Route::post('attendances/add', [AttendanceController::class, 'add']);
+    Route::get('attendances/show/{device_id}', [AttendanceController::class, 'getDeviceById']);
+    Route::post('attendances/edit/{device_id}', [AttendanceController::class, 'edit']);
+    Route::get('attendances/delete/{device_id}', [AttendanceController::class, 'delete']);
 });
