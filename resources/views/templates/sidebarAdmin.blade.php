@@ -98,6 +98,14 @@
 
                         @if (Auth::user()->level_id != 3)
                             <li class="nav-item">
+                                <a href="{{ url('/attendances/list') }}" class="nav-link">
+                                    <i class="fa fa-tablet nav-icon" aria-hidden="true"></i>
+
+                                    {{-- <i class="fas fa-tasks"></i> --}}
+                                    <p>Máy chấm công</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('/symbol/index') }}" class="nav-link">
                                     <i class="fas fa-tasks nav-icon"></i>
                                     {{-- <i class="fas fa-tasks"></i> --}}

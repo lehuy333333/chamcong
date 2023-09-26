@@ -8,22 +8,24 @@ use App\Models\department;
 
 class DepartmentController extends Controller
 {
-    function getDepartment(){
+    function getDepartment()
+    {
         $data = department::where('id', '>', 0)->paginate(15);
         return view("pages.department.list1")->with(compact('data'));
-        
     }
 
-    public function jsonDepartmentById(Request $request){
+    public function jsonDepartmentById(Request $request)
+    {
         $department_id = $request->get('department_id');
         $department = department::find($department_id);
 
         return response()->json($department);
     }
-    
 
 
-    public function updateDepartment(Request $request){
+
+    public function updateDepartment(Request $request)
+    {
         $department                  = department::find($request->get('id'));
         $department->department_name            = trim($request->get('name'));
         $department->department_code            = trim($request->get('code'));
@@ -32,22 +34,22 @@ class DepartmentController extends Controller
         $message = 'Sửa đơn vị thành công !!!';
 
         return redirect()->route('department.index')->with(compact('message'));
-            
     }
 
 
 
     //***Xóa Department***
-    public function deleteDepartment($id){
+    public function deleteDepartment($id)
+    {
         $department = department::findOrFail($id);
         $department->delete();
-        $message = 'Xóa đơn vị'.' ' .$department->department_name.' '. 'thành công !!!';
+        $message = 'Xóa đơn vị' . ' ' . $department->department_name . ' ' . 'thành công !!!';
         return redirect()->route('department.index')->with(compact('message'));
-            
     }
 
-    public function addDepartment(Request $request){
-        
+    public function addDepartment(Request $request)
+    {
+
         $this->validate(request(), [
             'department_name' => 'required',
         ]);
@@ -58,10 +60,10 @@ class DepartmentController extends Controller
             'department_code' => trim($request->get('department_code')),
         ];
 
-        
-            department::create($values);
-            $message = '"'.trim($request->get('department_name')).'" Thêm thành công';
-        
+
+        department::create($values);
+        $message = '"' . trim($request->get('department_name')) . '" Thêm thành công';
+
 
         $request->session()->flash('message', $message);
 

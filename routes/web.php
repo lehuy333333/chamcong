@@ -153,6 +153,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('attendances/list', [AttendanceController::class, 'index']);
     Route::post('attendances/add', [AttendanceController::class, 'add']);
     Route::get('attendances/show/{device_id}', [AttendanceController::class, 'getDeviceById']);
-    Route::post('attendances/edit/{device_id}', [AttendanceController::class, 'edit']);
+    Route::post('attendances/edit', [AttendanceController::class, 'edit']);
     Route::get('attendances/delete/{device_id}', [AttendanceController::class, 'delete']);
 });

@@ -24,16 +24,16 @@ class AttendanceController extends Controller
     public function index()
     {
         $zkteco_devices = zkteco_devices::all();
-        foreach ($zkteco_devices as $key => $device) {
-            $zk = new ZktecoLib($device->ip, $device->port);
-            if ($zk->connect()) {
-                $device->status = true;
-            } else {
-                $device->status = false;
-            }
-            $device->update();
-        }
-        return view('zkteco::app', compact('zkteco_devices'));
+        // foreach ($zkteco_devices as $key => $device) {
+        //     $zk = new ZktecoLib($device->ip, $device->port);
+        //     if ($zk->connect()) {
+        //         $device->status = true;
+        //     } else {
+        //         $device->status = false;
+        //     }
+        //     $device->update();
+        // }
+        return view('pages/attendance/index', compact('zkteco_devices'));
     }
 
     public function add(Request $request)
@@ -45,8 +45,9 @@ class AttendanceController extends Controller
         ]);
 
         $input = $request->all();
-        $zk = new zkteco_devices($input);
-        return view('zkteco::app', compact('zkteco_devices'));
+        zkteco_devices::create($input);
+
+        return redirect('/attendances/list');
     }
 
     public function getDeviceById($device_id)
@@ -65,8 +66,9 @@ class AttendanceController extends Controller
         ]);
 
         $input = $request->all();
-        $zk = new zkteco_devices($input);
-        return view('zkteco::app', compact('zkteco_devices'));
+        $device = zkteco_devices::findorfail($request->id);
+        $device->update($input);
+        return redirect('/attendances/list');
     }
 
     function delete($device_id)
@@ -80,7 +82,7 @@ class AttendanceController extends Controller
             $message = 'Nhân viên này không thể xóa, vui lòng liên hệ admin !!!';
         } 
 
-        return redirect('/attendances/index')->with(compact('message'));
+        return redirect('/attendances/list');
     }
 
     public function syncUserDevice($department_id, $device_id)
