@@ -54,7 +54,7 @@
                                             {{ csrf_field() }}
                                             <input type="hidden" value="{{ $user->id }}" name="id">
                                             <input type="hidden" value="{{ $user->isActive }}" name="isActive">
-                                            <td class="text-center">{{ ($users->currentPage()-1)*$users->perPage() + $loop->index + 1 }}</td>
+                                            <td class="text-center"><p>{{ ($users->currentPage()-1)*$users->perPage() + $loop->index + 1 }}</p></td>
                                             <td class="text-center">
                                                 <p class="show_hidden">{{ $user->username }}</p>
                                                 <input type="text" value="{{ $user->username }}" name="username"
@@ -106,13 +106,13 @@
                                             </td>
 
                                             <td>
-                                                <a href="#" class="show_hidden"><i
+                                                <a href="javascript:void(0);" class="show_hidden"><i
                                                         class="fas fa-edit show_hidden_btn">Sửa</i>
                                                     |</a>
-                                                <a href="#" class="hidden_form"><i class="fas fa-save"
+                                                <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-save"
                                                         style="color: green"></i>
                                                     |</a>
-                                                <a href="#" class="hidden_form"><i class="fas fa-times"
+                                                <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-times"
                                                         style="color: grey"></i>
                                                     |</a>
                                                 <a href="../users/delete/{{ $user->id }}" data-toggle="modal"
@@ -315,17 +315,17 @@
                         {{ csrf_field() }}
                         <div class="row form-group" style="margin: 30px 50px 0px 50px">
                             <div class="col-sm-6">
-                                <label for="fname">Tên đăng nhập</label>
+                                <label for="username">Tên đăng nhập</label>
                                 <input type="text" value="{{ old('username') }}" class="form-control form-control-user"
-                                    placeholder="Tên đăng nhập" name="username">
+                                    placeholder="Tên đăng nhập" name="username" id="username">
                                 @error('username')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-sm-6">
-                                <label for="fname">Họ Tên</label>
+                                <label for="fullname">Họ Tên</label>
                                 <input type="text" value="{{ old('fullname') }}" class="form-control form-control-user"
-                                    placeholder="Họ tên" name="fullname">
+                                    placeholder="Họ tên" name="fullname" id="fullname">
                                 @error('fullname')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -335,17 +335,17 @@
 
                         <div class="row form-group" style="margin: 10px 50px 0px 50px">
                             <div class="col-sm-6">
-                                <label for="fname">Email</label>
+                                <label for="email">Email</label>
                                 <input type="email" value="{{ old('email') }}" class="form-control form-control-user"
-                                    placeholder="Email" name="email">
+                                    placeholder="Email" name="email" id="email">
                                 @error('email')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             
                             <div class="col-sm-6">
-                                <label for="fname">Phân quyền</label>
-                                <select class="form-control form-control-user" name="level_id">
+                                <label for="level_id">Phân quyền</label>
+                                <select class="form-control form-control-user" name="level_id" id="level_id">
                                     <option value="">---Chọn phân quyền---</option>
                                     @foreach ($levels as $level)
                                         <option value="{{ $level->id }}" @if (old('level_id') == $level->id) selected @endif>
@@ -362,7 +362,7 @@
                         <div class="row form-group" style="margin: 10px 50px 0px 50px">
                            
                             <div class="col-sm-12">
-                                <label for="fname" class="text-center">Phòng Ban</label>
+                                <label for="frm-phongban" class="text-center">Phòng Ban</label>
                                 <select class="form-control form-control-user" id="frm-phongban" name="department_id">
                                     <option class="text-center" value="">---Chọn Phòng Ban---</option>
                                     @foreach ($departments as $department)

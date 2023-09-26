@@ -62,7 +62,7 @@
                                 <form action="{{ url('/department/update') }}" method="POST">
                                     {{ csrf_field() }}
                                     <input type="hidden" value="{{ $department->id }}" name="id">
-                                    <td>{{ $loop->index + 1 }}</td>
+                                    <td><p>{{ $loop->index + 1 }}</p></td>
                                     <td>
                                      <p class="show_hidden">{{ $department->department_name }}</a> </p> 
                                         <input type="text" value="{{ $department->department_name }}" name="name"
@@ -77,11 +77,11 @@
                                     
 
                                     <td>
-                                        <a href="#" class="show_hidden"><i
+                                        <a href="javascript:void(0);" class="show_hidden"><i
                                                 class="fas fa-edit show_hidden_btn"></i>Sửa</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                        <a href="#" class="hidden_form"><i class="fas fa-save"
+                                        <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-save"
                                                 style="color: green"></i> |</a>
-                                        <a href="#" class="hidden_form"><i class="fas fa-times"
+                                        <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-times"
                                                 style="color: grey"></i> |</a>
                                         <a href="../department/delete/{{ $department->id }}" data-toggle="modal"
                                             data-target="#confirmModal" class="confirm-action-btn"><i
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a href="#" class="btn btn-secondary btn-icon-split" data-dismiss="modal">
+                        <a href="javascript:void(0);" class="btn btn-secondary btn-icon-split" data-dismiss="modal">
                             <span class="icon text-white-50">
                                 <i class="fas fa-ban"></i>
                             </span>

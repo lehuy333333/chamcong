@@ -36,6 +36,7 @@ class WorkSymbolController extends Controller
         $symbol                  = work_symbols::find($request->get('id'));
         $symbol->symbol_id       = trim($request->get('symbol_id'));
         $symbol->symbol_name     = trim($request->get('symbol_name'));
+        $symbol->work_symbols_coefficient     = trim($request->get('work_symbols_coefficient'));
         $symbol->description     = trim($request->get('description'));
         $symbol->update();
 

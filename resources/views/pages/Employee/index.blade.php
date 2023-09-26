@@ -67,7 +67,7 @@
                                             {{ csrf_field() }}
                                             <input type="hidden" value="{{ $employee->id }}" name="id">
                                             {{-- <input type="hidden" value="{{ $employee->isActive }}" name="isActive"> --}}
-                                            <td class="text-center">{{ ($employees->currentPage()-1)*$employees->perPage() + $loop->index + 1 }}</td>
+                                            <td class="text-center"><p>{{ ($employees->currentPage()-1)*$employees->perPage() + $loop->index + 1 }}</p></td>
                                             <td class="text-center">
                                                 <p class="show_hidden">{{ $employee->employeeID }}</p>
                                                 <input type="text" value="{{ $employee->employeeID }}" name="employeeID"
@@ -119,13 +119,13 @@
                                             </td>
 
                                             <td class="text-center">
-                                                <a href="#" class="show_hidden"><i
+                                                <a href="javascript:void(0);" class="show_hidden"><i
                                                         class="fas fa-edit show_hidden_btn">Sửa</i>
                                                     |</a>
-                                                <a href="#" class="hidden_form"><i class="fas fa-save"
+                                                <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-save"
                                                         style="color: green"></i>
                                                     |</a>
-                                                <a href="#" class="hidden_form"><i class="fas fa-times"
+                                                <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-times"
                                                         style="color: grey"></i>
                                                     |</a>
                                                 <a href="../employee/delete/{{ $employee->id }}" data-toggle="modal"
@@ -161,17 +161,17 @@
                     {{ csrf_field() }}
                     <div class="row form-group" style="margin: 30px 50px 0px 50px">
                         <div class="col-sm-6">
-                            <label for="fname">MSNV </label>
+                            <label for="employeeID">MSNV </label>
                             <input type="text" value="{{ old('employeeID') }}" class="form-control form-control-user"
-                                placeholder="MSNV " name="employeeID">
+                                placeholder="MSNV " name="employeeID" id="employeeID">
                             @error('employeeID')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-sm-6">
-                            <label for="fname">Khối</label>
-                            <select class="form-control form-control-user" name="employee_type_id">
+                            <label for="employee_type_id">Khối</label>
+                            <select class="form-control form-control-user" name="employee_type_id" id="employee_type_id">
                                 <option value="">---Chọn Khối---</option>
                                 @foreach ($Etype as $Etypes)
                                     <option value="{{ $Etypes->id }}" @if (old('employee_type_id') == $Etypes->id) selected @endif>
@@ -195,18 +195,18 @@
 
                     <div class="row form-group" style="margin: 10px 50px 0px 50px">
                         <div class="col-sm-6">
-                            <label for="fname">Họ </label>
+                            <label for="lastname">Họ </label>
                             <input type="text" value="{{ old('lastname') }}" class="form-control form-control-user"
-                                placeholder="Họ " name="lastname">
+                                placeholder="Họ " name="lastname" id="lastname">
                             @error('lastname')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-sm-6">
-                            <label for="fname">Tên </label>
+                            <label for="firstname">Tên </label>
                             <input type="text" value="{{ old('firstname') }}" class="form-control form-control-user"
-                                placeholder="Tên " name="firstname">
+                                placeholder="Tên " name="firstname" id="firstname">
                             @error('firstname')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -216,8 +216,8 @@
                     <div class="row form-group" style="margin: 10px 50px 0px 50px">
 
                         <div class="col-sm-6">
-                            <label for="fname">Phòng Ban</label>
-                            <select class="form-control form-control-user" name="department_id">
+                            <label for="department_id">Phòng Ban</label>
+                            <select class="form-control form-control-user" name="department_id" id="department_id">
                                 <option value="">---Chọn Phòng Ban---</option>
                                 @foreach ($departments as $department)
                                     <option value="{{ $department->id }}"
@@ -230,8 +230,8 @@
                             @enderror
                         </div>
                         <div class="col-sm-6">
-                            <label for="fname">Chức vụ</label>
-                            <select class="form-control form-control-user" name="position_id">
+                            <label for="position_id">Chức vụ</label>
+                            <select class="form-control form-control-user" name="position_id" id="position_id">
                                 <option value="">---Chọn chức vụ---</option>
                                 @foreach ($positions as $position)
                                     <option value="{{ $position->id }}"

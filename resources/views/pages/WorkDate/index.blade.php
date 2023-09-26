@@ -5,18 +5,6 @@
 @endsection
 
 @section('content')
-    <script>
-        $(document).ready(function() {
-            <?php
-            foreach ($workdates as $workdate) {
-                if ($workdate->isWeekend) {
-                    echo '$("*[data-date='.$workdate->workdate.']").css("background-color", "#FFFFE0");';
-                }
-            }
-            ?>
-            
-        });
-    </script>
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -145,6 +133,22 @@
                 });
 
                 calendar.render();
+
+                changeBgColorWeekend();
+                $(".fc-button").click(function() {
+                    changeBgColorWeekend();
+                    //alert('ád');
+                });
+
+                function changeBgColorWeekend() {
+                    <?php
+                    foreach ($workdates as $workdate) {
+                        if ($workdate->isWeekend) {
+                            echo '$("*[data-date=' . $workdate->workdate . ']").css("background-color", "#F5F5F5");';
+                        }
+                    }
+                    ?>
+                }
             });
         </script>
 

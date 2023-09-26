@@ -75,13 +75,13 @@
                                             </td>
 
                                             <td class="text-center">
-                                                <a href="javascript:void(0)" class="show_hidden"><i
+                                                <a href="javascript:void(0);" class="show_hidden"><i
                                                         class="fas fa-edit show_hidden_btn">Sửa</i>
                                                 </a>
-                                                <a href="javascript:void(0)" class="hidden_form"><i class="fas fa-save"
+                                                <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-save"
                                                         style="color: green"></i>
                                                     |</a>
-                                                <a href="javascript:void(0)" class="hidden_form"><i class="fas fa-times"
+                                                <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-times"
                                                         style="color: grey"></i>
                                                 </a>
 

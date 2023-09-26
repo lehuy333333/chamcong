@@ -28,16 +28,19 @@
                             <th style="width: 3%">
                                 No.ID
                             </th>
-                            <th style="width: 20%">
+                            <th style="width: 10%">
                                Ký hiệu
                             </th>
-                            <th style="width: 30%">
+                            <th style="width: 20%">
                                 Tên ký hiệu
                             </th>
-                            <th style="width: 30%">
-                                Mô tả
+                            <th style="width: 10%">
+                                Hệ số
                             </th>
                             <th style="width: 35%">
+                                Mô tả
+                            </th>
+                            <th style="width: 17%">
                                 Action
                             </th>
                         </tr>
@@ -48,7 +51,7 @@
                                 <form action="{{ url('/symbol/update') }}" method="POST">
                                     {{ csrf_field() }}
                                     <input type="hidden" value="{{ $symbols->id }}" name="id">
-                                    <td>{{ $loop->index + 1 }}</td>
+                                    <td><p>{{ $loop->index + 1 }}</p>   </td>
                                     <td>
                                         <p class="show_hidden">{{ $symbols->symbol_id }}</p>
                                         <input type="text" value="{{ $symbols->symbol_id  }}" name="symbol_id"
@@ -60,17 +63,22 @@
                                             class="hidden_form form-control">
                                     </td>
                                     <td>
+                                        <p class="show_hidden">{{ $symbols->work_symbols_coefficient }}</p>
+                                        <input type="text" value="{{ $symbols->work_symbols_coefficient }}" name="work_symbols_coefficient"
+                                            class="hidden_form form-control">
+                                    </td>
+                                    <td>
                                         <p class="show_hidden">{{ $symbols->description }}</p>
                                         <input type="text" value="{{ $symbols->description }}" name="description"
                                             class="hidden_form form-control">
                                     </td>
 
                                     <td>
-                                        <a href="#" class="show_hidden"><i
+                                        <a href="javascript:void(0);" class="show_hidden"><i
                                                 class="fas fa-edit show_hidden_btn"></i>Sửa</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                        <a href="#" class="hidden_form"><i class="fas fa-save"
+                                        <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-save"
                                                 style="color: green"></i> |</a>
-                                        <a href="#" class="hidden_form"><i class="fas fa-times"
+                                        <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-times"
                                                 style="color: grey"></i> |</a>
                                         <a href="../symbol/delete/{{ $symbols->id }}" data-toggle="modal"
                                             data-target="#confirmModal" class="confirm-action-btn"><i
@@ -104,7 +112,7 @@
                     <input type="hidden" name="id" value="" id="symbol_id" name="symbol_id">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="txtID">Ký hiệu</label>
+                            <label for="txtid">Ký hiệu</label>
                             <input type="text" class="form-control border border-danger"  id="txtid" name="symbol_id">
                         </div>
                         <div class="form-group">

@@ -53,11 +53,11 @@
                                     
 
                                     <td>
-                                        <a href="#" class="show_hidden"><i
+                                        <a href="javascript:void(0);" class="show_hidden"><i
                                                 class="fas fa-edit show_hidden_btn"></i>Sửa</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                        <a href="#" class="hidden_form"><i class="fas fa-save"
+                                        <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-save"
                                                 style="color: green"></i> |</a>
-                                        <a href="#" class="hidden_form"><i class="fas fa-times"
+                                        <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-times"
                                                 style="color: grey"></i> |</a>
                                         <a href="../Etype/delete/{{ $Etypes->id }}" data-toggle="modal"
                                             data-target="#confirmModal" class="confirm-action-btn"><i

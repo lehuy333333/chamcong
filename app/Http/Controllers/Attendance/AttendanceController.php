@@ -46,8 +46,8 @@ class AttendanceController extends Controller
 
         $input = $request->all();
         zkteco_devices::create($input);
-
-        return redirect('/attendances/list');
+        $message = 'Thêm máy chấm công mới thành công !!!';
+        return redirect('/attendances/list')->with(compact('message'));
     }
 
     public function getDeviceById($device_id)
@@ -68,21 +68,18 @@ class AttendanceController extends Controller
         $input = $request->all();
         $device = zkteco_devices::findorfail($request->id);
         $device->update($input);
-        return redirect('/attendances/list');
+        $message = 'Thay đổi thành công !!!';
+        return redirect('/attendances/list')->with(compact('message'));
     }
 
     function delete($device_id)
     {
         $zkteco_device = zkteco_devices::find($device_id);
 
-        try {
-            $zkteco_device->delete();
-            $message = 'Xóa nhân viên thành công !!!';
-        } catch (Exception $e) {
-            $message = 'Nhân viên này không thể xóa, vui lòng liên hệ admin !!!';
-        } 
+        $zkteco_device->delete();
+        $message = 'Xóa thành công !!!';
 
-        return redirect('/attendances/list');
+        return redirect('/attendances/list')->with(compact('message'));
     }
 
     public function syncUserDevice($department_id, $device_id)

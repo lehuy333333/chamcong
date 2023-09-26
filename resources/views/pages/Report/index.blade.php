@@ -11,7 +11,7 @@
             <form action="{{ url('report/delete') }}" method="post">
                 @csrf
                 <div class="form-group">
-                    <label for="month">Chọn ngày</label>
+                    <label for="date">Chọn ngày</label>
                     <input type="date" name="date" id="date" class="form-control">
 
                     <label for="department" class="mr-2 ">Chọn phân xưởng</label>

@@ -43,7 +43,7 @@
                                 <form action="{{ url('/level/update') }}" method="POST">
                                     {{ csrf_field() }}
                                     <input type="hidden" value="{{ $levels->id }}" name="id">
-                                    <td>{{ $loop->index + 1 }}</td>
+                                    <td><p>{{ $loop->index + 1 }}</p></td>
                                     <td>
                                         <p class="show_hidden">{{ $levels->level_name }}</p>
                                         <input type="text" value="{{ $levels->level_name }}" name="name"
@@ -52,11 +52,11 @@
                                     
 
                                     <td>
-                                        <a href="#" class="show_hidden"><i
+                                        <a href="javascript:void(0);" class="show_hidden"><i
                                                 class="fas fa-edit show_hidden_btn"></i>Sửa</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                        <a href="#" class="hidden_form"><i class="fas fa-save"
+                                        <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-save"
                                                 style="color: green"></i> |</a>
-                                        <a href="#" class="hidden_form"><i class="fas fa-times"
+                                        <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-times"
                                                 style="color: grey"></i> |</a>
                                         <a href="../level/delete/{{ $levels->id }}" data-toggle="modal"
                                             data-target="#confirmModal" class="confirm-action-btn"><i

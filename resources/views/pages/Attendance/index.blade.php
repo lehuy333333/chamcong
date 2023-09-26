@@ -49,7 +49,7 @@
                                     <form action="{{ url('/attendances/edit') }}" method="POST">
                                         {{ csrf_field() }}
                                         <input type="hidden" value="{{ $device->id }}" name="id">
-                                        <td>{{ $loop->index + 1 }}</td>
+                                        <td><p>{{ $loop->index + 1 }}</p></td>
                                         <td>
                                             <p class="show_hidden">{{ $device->model_name }}</p>
                                             <input type="text" value="{{ $device->model_name }}" name="model_name"
@@ -66,17 +66,19 @@
                                                 class="hidden_form form-control">
                                         </td>
                                         <td>
-                                            <p class="show_hidden">{{ $device->status }}</p>
-                                            <input type="text" value="{{ $device->status }}" name="status"
-                                                class="hidden_form form-control">
+                                            @if ($device->status)
+                                                <i class="fas fa-eye" style="color: green"></i>
+                                            @else
+                                                <i class="fas fa-eye-slash" style="color: red"></i>
+                                            @endif
                                         </td>
 
                                         <td>
-                                            <a href="#" class="show_hidden"><i
+                                            <a href="javascript:void(0);" class="show_hidden"><i
                                                     class="fas fa-edit show_hidden_btn"></i>Sửa</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                            <a href="#" class="hidden_form"><i class="fas fa-save"
+                                            <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-save"
                                                     style="color: green"></i> |</a>
-                                            <a href="#" class="hidden_form"><i class="fas fa-times"
+                                            <a href="javascript:void(0);" class="hidden_form"><i class="fas fa-times"
                                                     style="color: grey"></i> |</a>
                                             <a href="../attendances/delete/{{ $device->id }}" data-toggle="modal"
                                                 data-target="#confirmModal" class="confirm-action-btn"><i
@@ -110,18 +112,17 @@
                     <input type="hidden" name="id" value="" id="device_id" name="device_id">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="txtID">Tên máy</label>
-                            <input type="text" class="form-control border border-danger" id="txtModelName" name="model_name">
+                            <label for="txtModelName">Tên máy</label>
+                            <input type="text" class="form-control border border-danger" id="txtModelName"
+                                name="model_name">
                         </div>
                         <div class="form-group">
                             <label for="txtIP">IP</label>
-                            <input type="text" class="form-control border border-danger" id="txtIP"
-                                name="ip">
+                            <input type="text" class="form-control border border-danger" id="txtIP" name="ip">
                         </div>
                         <div class="form-group">
                             <label for="txtPort">Port</label>
-                            <input type="text" class="form-control border border-danger" id="txtPort"
-                                name="port">
+                            <input type="text" class="form-control border border-danger" id="txtPort" name="port">
                         </div>
                     </div>
                     <div class="modal-footer">
