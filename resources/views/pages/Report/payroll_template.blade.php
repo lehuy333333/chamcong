@@ -136,7 +136,7 @@
                     ->first();
             @endphp
             <td>
-                <b>{{ isset($reportprevious->total_surplus_workdate) ? round($reportprevious->total_surplus_workdate, 1) : '' }}</b>
+                <b>{{ isset($reportprevious->total_surplus_workdate) ? round($reportprevious->total_surplus_workdate, 1) : 0 }}</b>
             </td>
             <td>
                 <b>{{ $totalWorkdate - $totalOff }}</b>
@@ -150,7 +150,7 @@
                     <b>{{ $totalWorkdate }}</b>
                 </td>
                 <td>
-                    <b>{{ round($report->total_timesheet + $reportprevious->total_surplus_workdate, 1) }}</b>
+                    <b>{{ isset($reportprevious->total_surplus_workdate) ? round($report->total_timesheet + $reportprevious->total_surplus_workdate, 1) : round($report->total_timesheet, 1) }}</b>
                 </td>
                 <td>{{ $totalTL }}
                 </td>
@@ -169,9 +169,7 @@
                 <td>
                     <b>{{ $totalWorkdate }}</b>
                 </td>
-                <td>
-
-                </td>
+                <td></td>
                 <td>
                     <b>{{ $totalTL }}</b>
                 </td>

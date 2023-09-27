@@ -341,11 +341,15 @@ class ReportTimesheet extends Controller
                 ->where('start_date', $date->subMonth())
                 ->first();
 
-            //$totalOvertime = $totalOvertime / 8;
+            if(isset($reportprevious)){
+                $total_surplus_workdate = $reportprevious->total_surplus_workdate;
+            }else{
+                $total_surplus_workdate = 0;
+            }
 
             $totalWorkdate = $totalWorkdate + $totalOvertime;
 
-            $totalSurplusWorkdate = $reportprevious->total_surplus_workdate + $totalWorkdate - $totalBaseWorkdate;
+            $totalSurplusWorkdate = $total_surplus_workdate + $totalWorkdate - $totalBaseWorkdate;
 
             if ($totalSurplusWorkdate <= 0) {
                 $totalSurplusWorkdate = 0;
