@@ -20,27 +20,7 @@ class ImportTask implements ToCollection
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    // public function model(array $row)
-    // {
-    //     return new tasks([
-    //         'added_on' => $row[0],
-    //         'device_name' => $row[1],
-    //         'name' => $row[2],
-    //         'remedies' => $row[3],
-    //         // 'remedies' => $row[4],
-    //         'started_at' => $row[4],
-    //         'ended_at' => $row[5],
-    //         'interruption_time' => $row[6],
-    //         'interruption_cause' => $row[7],
-    //         'type_repair' => $row[8],
-    //         'result' => $row[9],
 
-    //     ]);
-    //     $emp = employees::where('employeeID', $row(10))->first();
-    //     $tasks->employees()->attach($emp);
-
-
-    // }
 
     public function collection(Collection $rows)
     {

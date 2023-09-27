@@ -29,22 +29,18 @@ class taskController extends Controller
     {
         $workdate = workdates::where('workdate', $selectDate)->first();
 
-        // if (is_null($workdate)) {
-        //     $message = 'Ngày làm việc chưa khởi tạo';
-        //     return redirect()->back()->with('message', $message);
-        // } elseif ($workdate->isLock) {
-        //     $message = 'Ngày làm việc đã khoá chấm công';
-        //     return redirect()->back()->with('message', $message);
-        // } else {
-        $tasks = tasks::where('added_on', $selectDate)
-            ->where('department_id', Auth::user()->department_id)->get();
-        return view("pages.task.tasksByDay")->with(compact('selectDate', 'tasks'));
-        // }
+        if (Auth::user()->level_id < 3) {
+            $tasks = tasks::where('added_on', $selectDate)->get();
+            return view("pages.task.tasksByDay")->with(compact('selectDate', 'tasks'));
+        } else {
+            $tasks = tasks::where('added_on', $selectDate)
+                ->where('department_id', Auth::user()->department_id)->get();
+            return view("pages.task.tasksByDay")->with(compact('selectDate', 'tasks'));
+        }
     }
 
     public function addTask(Request $request)
     {
-
         $taskTotal = $request->txtTaskTotal;
         $selectDate = $request->selectDate;
 
@@ -108,6 +104,4 @@ class taskController extends Controller
         $message = 'Import hạng mục công việc thành công!';
         return back()->with(compact('message'));
     }
-
-
 }

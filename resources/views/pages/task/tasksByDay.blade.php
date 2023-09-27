@@ -22,7 +22,7 @@
                 <table class="table table-striped projects">
                     <thead style="background-color: rgb(175, 200, 236)">
                         <tr>
-                            
+
                             <th>
                                 Thiết bị
                             </th>
@@ -49,13 +49,15 @@
                             </th>
                             <th>
                                 Loại sửa chữa
-                             </th>
-                            <th>
-                               Kết quả
                             </th>
                             <th>
-                                Xoá
+                                Kết quả
                             </th>
+                            @if (Auth::user()->level_id >= 3)
+                                <th>
+                                    Xoá
+                                </th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -78,27 +80,32 @@
                                             {{-- {{ $employee->employeeID }}, --}}
                                             {{ $employee->lastname }} {{ $employee->firstname }},
                                         @endforeach
-                                        <select class="select2" name="states[]" multiple="multiple">
-                                            @foreach (Auth::user()->department->employees as $employee)
-                                                <option value="{{ $employee->id }}">{{ $employee->lastname }} {{ $employee->firstname }}  </option>
-                                            @endforeach
-                                        </select>
+                                        @if (Auth::user()->level_id >= 3)
+                                            <select class="select2" name="states[]" multiple="multiple">
+                                                @foreach (Auth::user()->department->employees as $employee)
+                                                    <option value="{{ $employee->id }}">{{ $employee->fullname }}</option>
+                                                @endforeach
+                                            </select>
+                                        @endif
                                     </td>
-                                  <td><input type="text" value="{{ $task->type_repair }}"
-                                        name="type_repair">
+                                    <td><input type="text" value="{{ $task->type_repair }}" name="type_repair">
                                     </td>
-                                    <td><input type="text" value="{{ $task->result }}"
-                                        name="result">
+                                    <td><input type="text" value="{{ $task->result }}" name="result">
                                     </td>
                                     <td>
-                                        <a href="{{ url('task/delete?task_id=') . $task->id }}" class="btn btn-danger">X</a>    
+                                        @if (Auth::user()->level_id >= 3)
+                                            <a href="{{ url('task/delete?task_id=') . $task->id }}"
+                                                class="btn btn-danger">X</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
                         @endif
                     </tbody>
                 </table>
-                <a class="btn btn-success" onclick="saveTasks()">Lưu</a>
+                @if (Auth::user()->level_id >= 3)
+                    <a class="btn btn-success" onclick="saveTasks()">Lưu</a>
+                @endif
             </div>
             {{-- {{ $level->links('pagination::bootstrap-4') }} --}}
         </div>
@@ -169,12 +176,5 @@
             });
         }
 
-        // function sendRequest(arrData){
-        //     var xhr = new XMLHttpRequest();
-        //     var body = JSON.stringify(arrData);
-        //     xhr.open("POST", "{{ url('task/update') }}", true);
-        //     xhr.setRequestHeader('Content-type', 'application/json');
-        //     xhr.send(body);
-        // }
     </script>
 @endsection
