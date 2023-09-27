@@ -8,33 +8,10 @@
 
     <div class="container-fluid">
         <div class="col-md-3 mb-2 d-print-none">
-            {{-- <form action="{{ url('report/show') }}" method="post" class="mb-2">
-                @csrf
-                <div class="form-group">
-                    <label for="month">Chọn tháng</label>
-                    <input type="month" name="month" id="month"
-                        value="{{ isset($month) ? \Carbon\Carbon::parse($month)->format('Y-m') : '' }}"
-                        class="form-control">
-
-                    <label for="department" class="mr-2 ">Chọn phân xưởng</label>
-                    <select id="department" name="department" class="mr-2 form-control">
-                        @if (Auth::user()->level_id > 2)
-                            <option value="{{ Auth::user()->department_id }}">
-                                {{ Auth::user()->department->department_name }}</option>
-                        @else
-                            @foreach ($departments as $department)
-                                <option value="{{ $department->id }}">{{ $department->department_name }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-sm btn-success">Xem</button>
-            </form> --}}
-
             <div class="form-group">
                 <label for="month">Chọn tháng</label>
                 <input type="month" name="month" id="month"
-                    value="{{ isset($month) ? \Carbon\Carbon::parse($month)->format('Y-m') : '' }}" class="form-control">
+                    value="{{ isset($month) ? \Carbon\Carbon::parse($month)->format('Y-m') : \Carbon\Carbon::now()->format('Y-m') }}" class="form-control">
 
                 <label for="department" class="mr-2 ">Chọn phân xưởng</label>
                 <select id="department" name="department" class="mr-2 form-control">
@@ -72,7 +49,6 @@
                 <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Chính thức</a></li>
                 <li class="nav-item"><a class="nav-link" href="#KV" data-toggle="tab">Khoán việc</a></li>
                 <li class="nav-item"><a class="nav-link" href="#GT" data-toggle="tab">Giải trình</a></li>
-                <!--<li class="nav-item"><a class="nav-link" href="#GT" data-toggle="tab">Giải Trình</a></li>-->
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="activity">
@@ -529,7 +505,7 @@
                                                 <b>{{ round($report->total_overtime, 1) }}</b>
                                             </td> --}}
                                             <td class="text-center">
-                                                <b>{{ isset($reportprevious->total_surplus_workdate) ? round($report->total_timesheet + $reportprevious->total_surplus_workdate, 1) : round($report->total_timesheet,1)}}</b>
+                                                <b>{{ isset($reportprevious->total_surplus_workdate) ? round($report->total_timesheet + $reportprevious->total_surplus_workdate, 1) : round($report->total_timesheet, 1) }}</b>
                                             </td>
                                             <td class="text-center">{{ $totalTL }}</td>
                                             <td><b>{{ round($report->total_surplus_workdate, 1) }}</b></td>
@@ -824,7 +800,6 @@
         $('#btnPrint').click(function(e) {
             window.print();
         });
-
     </script>
 
     <style>
