@@ -103,7 +103,7 @@ class taskController extends Controller
 
     public function import(Request $request)
     {
-        $path = $request->file('taskImport')->getRealPath();
+        $path = $request->file('taskImport');
         Excel::import(new ImportTask, $path);
         $message = 'Import hạng mục công việc thành công!';
         return back()->with(compact('message'));
