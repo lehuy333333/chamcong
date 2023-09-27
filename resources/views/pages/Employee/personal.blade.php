@@ -32,11 +32,10 @@
                                             enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             <input type="hidden" value="{{ $employee->id }}" name="id">
-                                            {{-- <input type="hidden" value="{{ $employee->isActive }}" name="isActive"> --}}
                                             <input type="hidden" value="{{ $employee->department_id }}"
                                                 name="department_id">
                                             <input type="hidden" value="{{ $employee->position_id }}" name="position_id">
-                                            <td>{{ $loop->index + 1 }}</td>
+                                            <td><p>{{ $loop->index + 1 }}</p></td>
                                             <td class="text-center">
                                                 <p class="show_hidden">{{ $employee->employeeID }}</p>
                                                 <input type="text" value="{{ $employee->employeeID }}" name="employeeID"

@@ -57,12 +57,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $department)
+                        @foreach ($data as $key => $department)
                             <tr>
                                 <form action="{{ url('/department/update') }}" method="POST">
                                     {{ csrf_field() }}
                                     <input type="hidden" value="{{ $department->id }}" name="id">
-                                    <td><p>{{ $loop->index + 1 }}</p></td>
+                                    <td><p>{{ ($data->currentPage()-1) * $data->perPage() + $key + 1 }}</p></td>
                                     <td>
                                      <p class="show_hidden">{{ $department->department_name }}</a> </p> 
                                         <input type="text" value="{{ $department->department_name }}" name="name"

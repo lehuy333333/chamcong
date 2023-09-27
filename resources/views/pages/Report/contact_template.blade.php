@@ -8,7 +8,7 @@
             style="text-align: center;vertical-align: middle;">
             <div class="text-center">
                 <h5><b>BẢNG CHẤM CÔNG - CÔNG TY CỔ PHẦN DỊCH VỤ CONTAINER TÂN CẢNG THÁNG
-                    {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}</b></h5>
+                        {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}</b></h5>
             </div>
         </td>
     </tr>
@@ -265,25 +265,7 @@
 
         </tr>
     @endforeach
-    @if (Auth::user()->level_id > 1)
-        <tr class="noborder">
-            @php
-                $col = 13 + $workdates->count();
-            @endphp
-            <td colspan="{{ $col / 4 }}">
-                <h6><b>Người lập</b></h6>
-            </td>
-            <td colspan="{{ $col / 4 }}">
-                <h6><b>{{ Auth::user()->department->department_name }}</b></h6>
-            </td>
-            <td colspan="{{ $col / 4 }}">
-                <h6><b>Phòng TCLĐ-TL</b></h6>
-            </td>
-            <td colspan="{{ $col / 4 }}">
-                <h6><b>Ban giám đốc</b></h6>
-            </td>
-        </tr>
-    @else
+    <tr class="noborder"></tr>
     <tr class="noborder">
         @php
             $col = 13 + $workdates->count();
@@ -292,7 +274,7 @@
             <h6><b>Người lập</b></h6>
         </td>
         <td colspan="{{ $col / 4 }}">
-            <h6><b>{{ Auth::user()->department->department_name }}</b></h6>
+            <h6><b>{{ $department->department_name }}</b></h6>
         </td>
         <td colspan="{{ $col / 4 }}">
             <h6><b>Phòng TCLĐ-TL</b></h6>
@@ -301,5 +283,4 @@
             <h6><b>Ban giám đốc</b></h6>
         </td>
     </tr>
-    @endif
 </table>

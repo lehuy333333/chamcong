@@ -37,12 +37,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($positions as $position)
+                        @foreach ($positions as $key => $position)
                             <tr>
                                 <form action="{{ url('/position/update') }}" method="POST">
                                     {{ csrf_field() }}
                                     <input type="hidden" value="{{ $position->id }}" name="id">
-                                    <td><p>{{ $loop->index + 1 }}</p></td>
+                                    <td><p>{{ $key + 1 }}</p></td>
                                     <td>
                                         <p class="show_hidden">{{ $position->position_name }}</p>
                                         <input type="text" value="{{ $position->position_name }}" name="name"

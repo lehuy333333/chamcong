@@ -347,47 +347,28 @@
 
                                 </tr>
                             @endforeach
-                            @if (Auth::user()->level_id > 1)
-                                <tr class="noborder">
-                                    @php
-                                        $col = 14 + $workdates->count();
-                                    @endphp
-                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>Người lập báo cáo</b></h6>
-                                    </td>
-                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>{{ Auth::user()->department->department_name }}</b></h6>
-                                    </td>
-                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>Phòng TCLĐ-TL</b></h6>
-                                    </td>
-                                    <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>Ban giám đốc</b></h6>
-                                    </td>
-                                </tr>
-                            @else
-                                <tr class="noborder">
-                                    @php
-                                        $col = 14 + $workdates->count();
-                                    @endphp
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>Người lập báo cáo</b></h6>
-                                    </td>
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>{{ $depart->department_name }}</b></h6>
-                                    </td>
-                                    <td colspan="{{ $col / 3 }}" style="text-align: center;vertical-align: middle;"
-                                        class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>Giám đốc phụ trách</b></h6>
-                                    </td>
-                                </tr>
-                            @endif
+                            <tr class="noborder">
+                                @php
+                                    $col = 14 + $workdates->count();
+                                @endphp
+                                <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
+                                    class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                    <h6><b>Người lập báo cáo</b></h6>
+                                </td>
+                                <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
+                                    class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                    <h6><b>{{ $depart->department_name }}</b></h6>
+                                </td>
+                                <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
+                                    class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                    <h6><b>Phòng TCLĐ-TL</b></h6>
+                                </td>
+                                <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
+                                    class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
+                                    <h6><b>Ban giám đốc</b></h6>
+                                </td>
+                            </tr>
+
                         </table>
                     </div>
                 </div>
@@ -548,7 +529,7 @@
                                                 <b>{{ round($report->total_overtime, 1) }}</b>
                                             </td> --}}
                                             <td class="text-center">
-                                                <b>{{ round($report->total_timesheet + $reportprevious->total_surplus_workdate, 1) }}</b>
+                                                <b>{{ isset($reportprevious->total_surplus_workdate) ? round($report->total_timesheet + $reportprevious->total_surplus_workdate, 1) : round($report->total_timesheet,1)}}</b>
                                             </td>
                                             <td class="text-center">{{ $totalTL }}</td>
                                             <td><b>{{ round($report->total_surplus_workdate, 1) }}</b></td>
@@ -654,7 +635,6 @@
 
                                     </tr>
                                 @endforeach
-                                @if (Auth::user()->level_id > 1)
                                 <tr class="noborder">
                                     @php
                                         $col = 14 + $workdates->count();
@@ -665,7 +645,7 @@
                                     </td>
                                     <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                        <h6><b>{{ Auth::user()->department->department_name }}</b></h6>
+                                        <h6><b>{{ $depart->department_name }}</b></h6>
                                     </td>
                                     <td colspan="{{ $col / 4 }}" style="text-align: center;vertical-align: middle;"
                                         class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
@@ -676,28 +656,7 @@
                                         <h6><b>Ban giám đốc</b></h6>
                                     </td>
                                 </tr>
-                                @else
-                                    <tr class="noborder">
-                                        @php
-                                            $col = 14 + $workdates->count();
-                                        @endphp
-                                        <td style="text-align: center;vertical-align: middle;"
-                                            colspan="{{ $col / 3 }}"
-                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                            <h6><b>Người lập báo cáo</b></h6>
-                                        </td>
-                                        <td style="text-align: center;vertical-align: middle;"
-                                            colspan="{{ $col / 3 }}"
-                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                            <h6><b>{{ $depart->department_name }}</b></h6>
-                                        </td>
-                                        <td style="text-align: center;vertical-align: middle;"
-                                            colspan="{{ $col / 3 }}"
-                                            class="text-center p-5 border-right-0 border-bottom-0 border-left-0 noborder">
-                                            <h6><b>Giám đốc phụ trách</b></h6>
-                                        </td>
-                                    </tr>
-                                @endif
+
                             </table>
                         </div>
                     @endif
@@ -709,23 +668,26 @@
                         <div class="table-responsive d-print-table">
                             <table class="table table-sm table-bordered" id="table-data-export">
                                 <tr class="noborder">
-                                    <td colspan=6 class="text-center border-right-0  border-top-0 border-bottom-0 border-left-0 noborder"
+                                    <td colspan=6
+                                        class="text-center border-right-0  border-top-0 border-bottom-0 border-left-0 noborder"
                                         style="text-align: center;vertical-align: middle;">
                                         <div class="text-center">
                                             <h5><b>BẢNG GIẢI TRÌNH - CÔNG TY CỔ PHẦN DỊCH VỤ KỸ THUẬT TÂN CẢNG THÁNG
-                                                    {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}</b></h5>
+                                                    {{ \Carbon\Carbon::parse($workdates->first()->workdate)->format('m-Y') }}</b>
+                                            </h5>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr class="noborder">
-                                    <td colspan=6 class="text-center border-right-0  border-top-0 border-bottom-0 border-left-0 noborder"
+                                    <td colspan=6
+                                        class="text-center border-right-0  border-top-0 border-bottom-0 border-left-0 noborder"
                                         style="text-align: center;vertical-align: middle;">
                                         <div class="text-center">
-                                            <h6><b>{{ $depart->department_name}}</b></h6>
+                                            <h6><b>{{ $depart->department_name }}</b></h6>
                                         </div>
                                     </td>
                                 </tr>
-                            
+
                                 <tr class="table-primary">
                                     <td style="background-color:#b8daff;">STT</td>
                                     <td style="background-color:#b8daff;">Ngày</td>
@@ -742,7 +704,7 @@
                                     @endforeach --}}
                                     <td style="background-color:#b8daff;"><b>Giải trình</b></td>
                                 </tr>
-                            
+
                                 @php
                                     $count = 0;
                                 @endphp
@@ -755,13 +717,13 @@
                                             ->sortBy('workdate_id');
                                         
                                     @endphp
-                            
+
                                     @foreach ($workdates as $workdate)
                                         @php
                                             $tmp = null;
                                             //$wsc = 0;
                                         @endphp
-                            
+
                                         @foreach ($timesheets as $timesheet)
                                             @if ($timesheet->workdate_id == $workdate->id)
                                                 @if (@isset($timesheet->explain))
@@ -770,7 +732,8 @@
                                                     @endphp
                                                     <tr>
                                                         <td>{{ $count }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($workdate->workdate)->format('d-m') }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($workdate->workdate)->format('d-m') }}
+                                                        </td>
                                                         <td>{{ $employee->employeeID }}</td>
                                                         <td><b>{{ $employee->fullname }}</b></td>
                                                         <td>{{ $timesheet->explain }}</td>
@@ -780,9 +743,9 @@
                                         @endforeach
                                     @endforeach
                                 @endforeach
-                            
-                            
-                               
+
+
+
                             </table>
                         </div>
                     @endif
@@ -862,21 +825,6 @@
             window.print();
         });
 
-        // function printDiv() {
-        //     var divToPrint = window;
-        //     var htmlToPrint = '' +
-        //         '<style type="text/css">' +
-        //         'table th, table td {' +
-        //         'border:1px solid #000;' +
-        //         'padding:0.5em;' +
-        //         '}' +
-        //         '</style>';
-        //     htmlToPrint += divToPrint.outerHTML;
-        //     newWin = window.open("");
-        //     newWin.document.write(htmlToPrint);
-        //     newWin.print();
-        //     newWin.close();
-        // }
     </script>
 
     <style>

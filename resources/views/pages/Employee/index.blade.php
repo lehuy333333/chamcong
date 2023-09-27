@@ -12,12 +12,12 @@
                 <div class="card-header py-3">
                     <form action="{{ url('employee/import') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <a class="btn btn-success" href="#" data-toggle="modal"
-                            data-target="#addEmployeeModal" id="inserEmployeetButton">
+                        <a class="btn btn-success" href="#" data-toggle="modal" data-target="#addEmployeeModal"
+                            id="inserEmployeetButton">
                             <i class="fas fa-plus">Thêm Nhân viên</i>
                         </a>
-                        <input type="file" name="employeeImport" id="employeeImport" accept=".xlsx, .csv, .xls" hidden=true
-                            onchange="this.form.submit()">
+                        <input type="file" name="employeeImport" id="employeeImport" accept=".xlsx, .csv, .xls"
+                            hidden=true onchange="this.form.submit()">
                         <label for="employeeImport"><i class="btn btn-primary">Thêm từ file excel</i></label>
 
                         <a class="btn btn-success" href="{{ url('employee/export') }}">Xuất dữ liệu</a>
@@ -41,33 +41,17 @@
                                 <th class="text-center">Action</th>
                             </thead>
                             <tbody>
-                                @foreach ($employees as $employee)
-                                    {{-- <tr>
-                                        <td class="text-center">{{ $employee->employeeID }}</td>
-                                        <td class="text-left">{{ $employee->lastname }}</td>
-                                        <td class="text-left"><b>{{ $employee->firstname }}</b></td>
-                                        <td class="text-center">{{ $employee->department->department_name }}</td>
-                                        <td class="text-center">{{ $employee->position->name }}</td>
-                                        <td class="text-center">{{ $employee->employee_type->Etype_name }}</td>
-                                        <td class="text-center">
-                                            <a href="#" class="show_hidden"><i
-                                                    class="fas fa-edit show_hidden_btn"></i>Sửa</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                            <a href="#" class="hidden_form"><i class="fas fa-save"
-                                                    style="color: green"></i> |</a>
-                                            <a href="#" class="hidden_form"><i class="fas fa-times"
-                                                    style="color: grey"></i> |</a>
-                                            <a href="../employee/delete/{{ $employee->id }}" data-toggle="modal"
-                                                data-target="#confirmModal" class="confirm-action-btn"><i
-                                                    class="fas fa-trash" style="color: red">Xóa</i></a>
-                                        </td>
-                                    </tr> --}}
+                                @foreach ($employees as $key => $employee)
                                     <tr>
                                         <form action="{{ url('/employee/update') }}" method="POST"
                                             enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             <input type="hidden" value="{{ $employee->id }}" name="id">
                                             {{-- <input type="hidden" value="{{ $employee->isActive }}" name="isActive"> --}}
-                                            <td class="text-center"><p>{{ ($employees->currentPage()-1)*$employees->perPage() + $loop->index + 1 }}</p></td>
+                                            <td class="text-center">
+                                                <p>{{ ($employees->currentPage() - 1) * $employees->perPage() + $key + 1 }}
+                                                </p>
+                                            </td>
                                             <td class="text-center">
                                                 <p class="show_hidden">{{ $employee->employeeID }}</p>
                                                 <input type="text" value="{{ $employee->employeeID }}" name="employeeID"
@@ -137,7 +121,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        
+
                         {{ $employees->links() }}
                     </div>
                 @else
@@ -149,8 +133,8 @@
         </div>
     </div>
 
-    <div class="modal fade bd-example-modal-lg" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="Thêm mới"
-        aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="addEmployeeModal" tabindex="-1" role="dialog"
+        aria-labelledby="Thêm mới" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-success">
@@ -182,15 +166,6 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-
-                        {{-- <div class="col-sm-6">
-                            <label for="fname">Email</label>
-                            <input type="email" value="{{ old('email') }}" class="form-control form-control-user" placeholder="Email"
-                                name="email">
-                            @error('email')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div> --}}
                     </div>
 
                     <div class="row form-group" style="margin: 10px 50px 0px 50px">
@@ -234,8 +209,7 @@
                             <select class="form-control form-control-user" name="position_id" id="position_id">
                                 <option value="">---Chọn chức vụ---</option>
                                 @foreach ($positions as $position)
-                                    <option value="{{ $position->id }}"
-                                        @if (old('position_id') == $position->id) selected @endif>
+                                    <option value="{{ $position->id }}" @if (old('position_id') == $position->id) selected @endif>
                                         {{ $position->position_name }}</option>
                                 @endforeach
                             </select>
@@ -245,21 +219,6 @@
                         </div>
 
                     </div>
-
-
-                    {{-- <div class="row form-group" style="margin: 10px 50px 0px 50px">
-                        <div class="col-sm-6">
-                            <label for="fname">Hệ số </label>
-                            <input type="text" value="{{ old('personal_coefficient') }}" class="form-control form-control-user" placeholder="Hệ số "
-                                name="personal_coefficient">
-                            @error('personal_coefficient')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-            
-                        
-            
-                    </div> --}}
 
                     <div class="row form-group" style="margin: 10px 50px 30px 50px">
                         <div class="col-sm-12">
@@ -284,7 +243,6 @@
         .hidden_form {
             display: none;
         }
-
     </style>
 
     <script>

@@ -39,12 +39,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($Etype as $Etypes)
+                        @foreach ($Etype as $key => $Etypes)
                             <tr>
                                 <form action="{{ url('/Etype/update') }}" method="POST">
                                     {{ csrf_field() }}
                                     <input type="hidden" value="{{ $Etypes->id }}" name="id">
-                                    <td>{{ $loop->index + 1 }}</td>
+                                    <td>{{ $key + 1 }}</td>
                                     <td>
                                         <p class="show_hidden">{{ $Etypes->Etype_name }}</p>
                                         <input type="text" value="{{ $Etypes->Etype_name }}" name="Etype_name"
