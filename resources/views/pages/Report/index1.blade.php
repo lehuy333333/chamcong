@@ -11,7 +11,8 @@
             <div class="form-group">
                 <label for="month">Chọn tháng</label>
                 <input type="month" name="month" id="month"
-                    value="{{ isset($month) ? \Carbon\Carbon::parse($month)->format('Y-m') : \Carbon\Carbon::now()->format('Y-m') }}" class="form-control">
+                    value="{{ isset($month) ? \Carbon\Carbon::parse($month)->format('Y-m') : \Carbon\Carbon::now()->format('Y-m') }}"
+                    class="form-control">
 
                 <label for="department" class="mr-2 ">Chọn phân xưởng</label>
                 <select id="department" name="department" class="mr-2 form-control">
@@ -669,15 +670,6 @@
                                     <td style="background-color:#b8daff;">Ngày</td>
                                     <td style="background-color:#b8daff;">MSNV</td>
                                     <td style="background-color:#b8daff;">Họ Tên</td>
-                                    {{-- @foreach ($workdates as $workdate)
-                                        <td class="text-center"
-                                            @if ($workdate->isWeekend) style="background-color:#FAFAD2;" 
-                                            @elseif ($workdate->isHoliday) style="background-color:#CCFFFF;"
-                                            @else style="background-color:#b8daff;" @endif>
-                            
-                                            {{ \Carbon\Carbon::parse($workdate->workdate)->format('d') }}
-                                        </td>
-                                    @endforeach --}}
                                     <td style="background-color:#b8daff;"><b>Giải trình</b></td>
                                 </tr>
 
@@ -766,11 +758,6 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        {{-- <i>Khi <b>xuất báo cáo</b> tháng <b>nhỏ hơn</b> so với hiện tại, sẽ <b>khoá
-                                chấm
-                                công</b> tháng được
-                            xuất báo cáo!
-                        </i> --}}
                         <i>Bạn có muốn tính công?</i>
                         <form action="{{ url('report/autoCalculate') }}" method="POST" id="autoCalculate">
                             @csrf
@@ -796,55 +783,8 @@
             var form = $('#autoCalculate');
             form.submit();
         });
-
-        $('#btnPrint').click(function(e) {
-            window.print();
-        });
     </script>
 
-    <style>
-        @media print {
-            .card-body {
-                font-size: 9px;
-                margin: 0;
-                padding: 0;
-            }
-
-            .table tr td {
-                page-break-inside: avoid;
-            }
-
-            .table .noborder {
-                border: 0 !important;
-                border-width: 0 !important;
-            }
-
-            .table {
-                color-adjust: exact !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-
-            header,
-            footer {
-                display: none !important;
-            }
-
-            @page :footer {
-                color: #fff
-            }
-
-            @page :header {
-                color: #fff
-            }
-
-        }
-
-        @page {
-            size: A4 landscape;
-        }
-    </style>
 
 
 @endsection
